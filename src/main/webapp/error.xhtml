@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+		<meta charset="utf-8" />
+		<!-- Set the viewport so this responsive site displays correctly on mobile devices -->
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title><h:outputText value="#{loginController.nomeApplicazione}" escape="false" /></title>
+		<!-- Include bootstrap CSS -->
+		<h:outputStylesheet name="includes/bootstrap/css/bootstrap.min.css" target="head"/>
+		<h:outputStylesheet name="includes/style.css" target="head"/>
+		<link rel="icon" href="img/sipa_ico.ico" />
+		<h:outputScript library="includes" name="regionalsettings.js"/>
+		<h:outputScript library="includes" name="script.js" />
+		<h:outputScript library="includes" name="bootstrap/js/bootstrap.min.js"/>
+	</h:head>
+
+   	<body>
+ 
+   		<div class="page">
+        	<div class="header">
+ 
+ 				<!-- Site header and navigation -->
+				<nav class="navbar navbar-inverse">
+				  	<div class="container-fluid">
+				    	<div class="navbar-header">
+				     		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+				        		<span class="sr-only">Toggle navigation</span>
+				        		<span class="icon-bar"></span>
+				        		<span class="icon-bar"></span>
+				        		<span class="icon-bar"></span>
+				      		</button>
+				
+				      		<a href="index.xhtml">		      
+				      			<IMG alt="" src="img/Logo-anagraficaIppica_small.png" class="img-responsive" border ="0"/>
+				      		</a>
+				     	</div>
+				   		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+				      		<ul class="nav navbar-nav" id="menuSopra">
+							</ul>
+				    	</div>
+				  	</div>
+				</nav>
+			
+				<!-- Middle content section -->
+				<div class="middle">
+					<div class="container">
+						<div class="col-md-12 content">
+							<h2><h:outputText value="#{sfprop.errore}"/></h2>
+				        	A unexpected error occured! Message: #{pfExceptionHandler.message}
+							<br />
+				       		<h:outputText value="#{pfExceptionHandler.formattedStackTrace}" escape="false" />
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+     </body>
+
+</html>

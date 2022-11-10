@@ -1,0 +1,234 @@
+/* START CUSTOM AP */
+
+/* ******************** START CUSTOM AP ******************** */
+
+/* ***** Inizio Modifca del FONT ***** */
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, html, p, body, div, table {
+    /*font-family: Lucida Grande,Lucida Sans,Arial,sans-serif; //Arial, sans-serif !important;*/
+    font-family: Verdana;
+  font-size: 14px; 
+     
+}
+/* ***** Fine Modifca del FONT ***** */
+
+#form\:listaCavalliIscritti .ui-icon {
+  float: left;
+}
+
+/* **************
+* Hide search on partenti
+************** */
+div#form\:cavalliPickList {
+  width: 100%;
+}
+
+div:nth-child(3) .ui-picklist-filter-container {
+  text-indent: -9999px;
+}
+
+#form\:cavalliList_content div:nth-child(3) span {
+  display: none;
+}
+/* **************
+* Hide search on partenti
+************** */
+
+/* Inserito per ridimensionare il mese dell'Agenda */
+.fc-center h2 {
+	margin-top: .2em;
+	font-size:1.3em;
+}
+
+
+.ui-picklist-caption.ui-widget-header.ui-corner-tl.ui-corner-tr {
+  margin-top: 1em;
+}
+
+.ui-button-icon-only {
+  margin-right: 0;
+}
+
+.ui-picklist .ui-picklist-list {
+  width: auto;
+}
+
+li.ui-state-default.ui-tabs-selected.ui-state-active.ui-corner-top {
+  background-color: ffffff;
+  background-image: none;
+}
+
+li.ui-state-default.ui-corner-top {
+  background: #d1e8b0 url("/pagaippici/javax.faces.resource/images/ui-bg_gloss-wave_60_d1e8b0_500x100.png.xhtml?ln=primefaces-customgreen") 50% 50% repeat-x;
+  border: 1px solid #4c602f;
+}
+
+label {
+  margin-right: .5em;
+}
+
+/* ----------------------------- */
+/* AGENDA - INIZIO               */
+/* ----------------------------- */
+.fc-view-container {
+	border-bottom: 1px solid #89be3d;
+	margin-right: .5em;
+}
+
+.fc-content-skeleton {
+	cursor: cell;
+}
+
+.fc-event-container { 
+  cursor: pointer;
+}
+
+.fc-content {
+  text-align: center;
+  background-color: #89be3d;
+}
+
+.fc-event {
+
+  border: 10px solid #89be3d;
+  background-color: #89be3d;
+  
+}
+
+/*span#form\:partedestra div {
+  margin-left: .5em;
+}*/
+
+/* ----------------------------- */
+/* AGENDA - FINE                 */
+/* ----------------------------- */
+
+.ui-selectonemenu .ui-selectonemenu-trigger {
+  width: initial;
+  padding: 0 8px;
+}
+
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, html, p, body{
+    font-family: Lucida Grande,Lucida Sans,Arial,sans-serif; //Arial, sans-serif !important;
+}
+
+#j_idt30{
+	display:none !important;
+}
+
+.content {
+    background-color: #FFF;
+    height: 100%; 
+    //border-left: 5px dotted #93c54b;
+    //border-right: 5px dotted #93c54b;
+    
+}
+    
+    
+}
+
+.page {
+    background-color: #FFFFFF;
+}
+
+.footer {
+    background-color: #89be3d;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.header {
+    background-color: #89be3d;
+}
+
+.middle {
+    background-color: #FFF;
+}
+
+.middle .container {
+    background-color: #FFF;
+    min-height: 300px;
+    padding-bottom: 0px;
+    width: 100%;
+}
+
+.text_proposizione  {
+    font-style:italic;
+}
+
+a {
+text-decoration:underline;
+}
+
+/* margine */
+.ui-grid .ui-grid-row {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.testoverde{
+	color: darkgreen !important;
+	 font-weight: bold;
+}
+
+.testorosso{
+	color: red !important;
+	 font-weight: bold;
+}
+
+.testoarancione{
+	color: orange !important;
+	 font-weight: bold;
+}
+
+.testogrigio{
+	color: lightgray !important;
+	 font-weight: bold;
+}
+
+/* ******************** END CUSTOM AP ******************** */
+
+/* ******************** Stile per gestire il terzo livello dei menu ****** */
+.dropdown-submenu {
+    position:relative;
+}
+.dropdown-submenu>.dropdown-menu {
+    top:0;
+    left:100%;
+    margin-top:-6px;
+    margin-left:-1px;
+    -webkit-border-radius:0 6px 6px 6px;
+    -moz-border-radius:0 6px 6px 6px;
+    border-radius:0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+    display:block;
+}
+.dropdown-submenu>a:after {
+    display:block;
+    content:" ";
+    float:right;
+    width:0;
+    height:0;
+    border-color:transparent;
+    border-style:solid;
+    border-width:5px 0 5px 5px;
+    border-left-color:#cccccc;
+    margin-top:5px;
+    margin-right:-10px;
+}
+.dropdown-submenu:hover>a:after {
+    border-left-color:#ffffff;
+}
+.dropdown-submenu.pull-left {
+    float:none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left:-100%;
+    margin-left:10px;
+    -webkit-border-radius:6px 0 6px 6px;
+    -moz-border-radius:6px 0 6px 6px;
+    border-radius:6px 0 6px 6px;
+}
+

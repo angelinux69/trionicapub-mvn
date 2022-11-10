@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+ 	<!-- Site header and navigation -->
+<h:form id="menuForm"> 
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+
+      <a href="index.xhtml">
+		<p:graphicImage url="img/Logo-anagraficaIppica_small.png" alt="Home" title="Home"/>
+      </a>
+     </div>
+   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+
+<!-- NEW MENU 3 LIVELLI -->
+      <ul class="nav navbar-nav" id="menuSopra">
+      <ui:repeat var="menuGroupItem" value="#{loginController.menuList3Liv}">
+      
+      
+        <h:panelGroup rendered="#{empty menuGroupItem.menuItemList}">
+			<li class="#{menuGroupItem.active}" >
+			<h:commandLink action="#{loginController.chiamaFunzione}">
+				<f:param name="idMenu" value="#{menuGroupItem.id}"/>
+			<h:outputText value="#{menuGroupItem.desc}" />
+			</h:commandLink>
+			</li>
+      	</h:panelGroup>
+
+        <h:panelGroup rendered="#{not empty menuGroupItem.menuItemList}">
+	        <li class="dropdown #{menuGroupItem.active}">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	          <h:outputText value="#{menuGroupItem.desc}" /> <span class="caret"></span></a>
+	          	<ul class="dropdown-menu" role="menu">
+	      			<ui:repeat var="menuGroupItem2" value="#{menuGroupItem.menuItemList}">
+					
+					  <h:panelGroup rendered="#{empty menuGroupItem2.menuItemList}">
+						<li class="#{menuGroupItem2.active}" >
+						<h:commandLink action="#{loginController.chiamaFunzione}">
+							<f:param name="idMenu" value="#{menuGroupItem2.id}"/>
+						<h:outputText value="#{menuGroupItem2.desc}" />
+						</h:commandLink>
+						</li>
+					</h:panelGroup>
+					
+					<h:panelGroup rendered="#{not empty menuGroupItem2.menuItemList}">
+						<li class="dropdown dropdown-submenu">
+						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						  <h:outputText value="#{menuGroupItem2.desc}" /></a>
+							<ul class="dropdown-menu">
+								<ui:repeat var="menuItem3" value="#{menuGroupItem2.menuItemList}">
+									<li class="#{menuItem3.active}" >
+									<h:commandLink action="#{loginController.chiamaFunzione}">
+										<f:param name="idMenu" value="#{menuItem3.id}"/>
+									<h:outputText value="#{menuItem3.desc}" />
+									</h:commandLink>
+									</li>
+								</ui:repeat>
+							</ul>
+						</li>
+					</h:panelGroup>
+					
+					
+					
+					</ui:repeat>
+	      		</ul>
+	      	</li>
+	      	</h:panelGroup>
+      </ui:repeat>
+	  </ul>
+	  
+<!-- FINE NEW MENU 3 LIVELLI -->
+
+
+
+
+
+
+
+       <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+			<h:outputText value="#{loginController.utenteVo.nominativo}" />
+          	<span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+          <h:panelGroup rendered="#{loginController.logged}">
+            <li><h:outputLink value="https://signon.sian.it/jam/UI/Logout?redirectTo=http://www.politicheagricole.gov.it">logout <h:outputText value="#{loginController.utente}" /></h:outputLink></li>
+       		<li><a href="about.xhtml"><h:outputText value="#{sfprop.about}"/></a></li>
+           </h:panelGroup>
+           </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</h:form>
+</html>

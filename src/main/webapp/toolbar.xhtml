@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+
+	<h:inputHidden id="toolbarStep" value="#{controller.toolbarStep}"/>
+
+	<p:toolbar style="font-size:0.8em;">
+		
+		<f:facet name="left">
+			<div style="width: auto;">
+          		<h:panelGroup rendered="#{not empty controller.listaMenuL1}" style="float:left;margin-left:10px;">
+					<ui:repeat var="menuL1" value="#{controller.listaMenuL1}">
+						<p:commandButton
+										 styleClass="menuButton" 
+										 value="#{menuL1.descrizioneVoce}" >
+							<p:ajax event="click" listener="#{controller.naviga(menuL1.descLink)}"></p:ajax>
+						</p:commandButton>
+					</ui:repeat>
+         		</h:panelGroup>		
+			</div>
+		</f:facet>
+		<f:facet name="right">
+			<div style="float:left;margin-top:5px;color:ghostwhite;">
+				<em class="pi pi-user"/>
+			</div>
+			<div style="float:left;margin-left:10px;margin-right: 10px;color:ghostwhite;line-height:1.9;">
+				<h:outputLabel value="#{controller.datiUtente.nome} #{controller.datiUtente.cognome}" rendered="#{not empty controller.datiUtente.nome}" />
+				<h:outputLabel value="#{controller.datiUtente.username}" rendered="#{empty controller.datiUtente.nome}"/>
+			</div>
+		</f:facet>
+	</p:toolbar>
+	<SCRIPT type="text/javascript">
+		$(".menuButton").unbind();
+		$(".menuButton").click(function(evt){
+			showSpinner();
+		});
+	</SCRIPT>
+</html>

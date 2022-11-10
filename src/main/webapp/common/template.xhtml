@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta charset="utf-8" />
+
+<!-- Set the viewport so this responsive site displays correctly on mobile devices -->
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title><h:outputText value="#{loginController.nomeApplicazione}" escape="false" /></title>
+	
+<f:facet name="css-files">
+		<h:outputStylesheet name="includes/bootstrap/css/bootstrap.min.css" target="head"/>
+		<h:outputStylesheet name="includes/style.css" target="head"/>
+</f:facet>
+<link rel="icon" href="img/gareippiche.ico" />
+
+<script type="text/javascript">
+	function start() {
+	    PF('statusDialog').show();
+	}
+	 
+	function stop() {
+	    PF('statusDialog').hide();
+	}
+</script>
+	
+</h:head>
+
+
+   <h:body>
+ 
+         <div class="page">
+           <div class="header">
+                <ui:include src="/common/header.xhtml" />
+            </div>
+            <div >
+            <p:cache disabled="true">
+<p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">
+                <ui:insert name="content">
+                    Default Content
+                </ui:insert>
+</p:ajaxStatus>
+</p:cache>
+ 
+<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+ 
+<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    <h:graphicImage url="img/processing.gif" />
+</p:dialog>
+
+    <p:ajaxExceptionHandler type="it.sian.munc.anagraficaippica.util.ApplicationException"
+                            update="exceptionDialog"
+                            onexception="PF('exceptionDialog').show();" />
+
+    <p:dialog id="exceptionDialog" header="Ooops!!! Errore Applicativo Interno" widgetVar="exceptionDialog"
+              height="500px">
+              <h3>Si e' verificato un errore imprevisto. Ci scusiamo per l'inconveniente.</h3>
+              <br />
+              <h4>Si prega di ritentare l'operazione e, se l'errore persiste, contattare il supporto riportando il seguente dettaglio, grazie.</h4>
+        <br />
+        Message:<h4><strong> #{pfExceptionHandler.message}</strong></h4><br />
+        StackTrace: <h4><h:outputText value="#{pfExceptionHandler.formattedStackTrace}" escape="false" /></h4><br />
+
+        <p:button onclick="PF('exceptionDialog').hide();"
+                  value="Chiudi" />
+    </p:dialog>
+ 
+	    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+	        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    </p:confirmDialog>		
+ 
+            </div>
+        </div>
+                <h:outputScript library="includes" name="regionalsettings.js"/>
+		        <h:outputScript library="includes" name="bootstrap/js/bootstrap.min.js"/>
+    </h:body>
+
+</html>
