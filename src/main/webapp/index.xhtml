@@ -28,12 +28,17 @@
 					<div class="col-md-12 content">
 		
 						<h:form id="schemaDati" method="POST">
+						
+							<f:metadata>
+								<f:event type="preRenderView" listener="#{userController.onLoadView}" />
+							</f:metadata>	
+
 							<p:growl id="msgs" showDetail="true" life="5000"/>
 							<div class="ui-grid ui-grid-responsive">
 						    <div class="ui-grid-row">
 								<div class="ui-grid-col-12" align="center">
 									<h:panelGroup id="loggedPanel">
-										Benvenuto in Tionica Pub
+										Benvenuto in Trionica Pub <h:outputText value="#{userController.nomeUtente}" />
 									</h:panelGroup>
 									
 								</div>
