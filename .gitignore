@@ -1,1 +1,10 @@
 /target/
+.classpath
+.project
+.settings/.*
+.settings/
+
+ear/*
+/bin/
+trionicapub-src/target
+trionicapub-src/src/main/webapp/WEB-INF/classes/
