@@ -9,5 +9,6 @@ public class UserDTO {
 	
 	protected String nome; 
 	protected String cognome;
+	protected String ruolo;
 
 }

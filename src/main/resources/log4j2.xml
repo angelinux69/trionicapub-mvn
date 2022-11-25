@@ -25,7 +25,7 @@
  
     <Loggers>
         <!-- LOG everything at INFO level -->
-        <Root level="error">
+        <Root level="debug">
             <AppenderRef ref="RollingFile" />
         </Root>
  
