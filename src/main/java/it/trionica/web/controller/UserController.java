@@ -1,15 +1,19 @@
 package it.trionica.web.controller;
 
 import java.io.Serializable;
+import java.lang.System.Logger;
 import java.util.Arrays;
 import java.util.Base64;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ComponentSystemEvent;
 
+import org.primefaces.shaded.json.JSONObject;
+import org.primefaces.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
@@ -30,7 +34,7 @@ import it.trionica.web.util.Util;
 import lombok.extern.log4j.Log4j2;
 
 @ManagedBean(name="userController")
-@ViewScoped
+@SessionScoped
 @Log4j2
 public class UserController implements Serializable{
 	
@@ -38,10 +42,28 @@ public class UserController implements Serializable{
 	
 	RestTemplate restTemplate = new RestTemplate();
 	
-	private String nomeUtente;
+	private String username = "Utente";
 
-	private String cognomeUtente;
-		
+	private String password;
+	
+	private String logUtente = "false";
+	
+	
+	public void login(){
+		if(logUtente.equals("false")){
+			logUtente="true";
+			System.out.println(username);
+			System.out.println("Sono true");
+		}
+	}
+	public void logout(){
+		if(logUtente.equals("true")){
+			logUtente="false";
+			System.out.println("Sono false");
+		}
+	}
+	
+	JSONObject jsonObject = null;
 	
 	@ManagedProperty(value="#{util}")
 	private Util util;
@@ -59,37 +81,33 @@ public class UserController implements Serializable{
 	
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String signin() {
+	public ResponseEntity<?> signin() {
 		
 		UserDTO userBean = new UserDTO();
 
-		userBean.setNome(nomeUtente);
-		userBean.setCognome(cognomeUtente);
+		userBean.setNome(username);
+		userBean.setCognome(password);
 		
 		log.info("nome:"+userBean.getNome());
 		
 		//qui vanno in controlli utente e la chiamata al servizio in POST che fa l'inserimento
 		HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
 		/*
 		 	HttpHeaders headers = csrfHeaders();
 			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		*/
         
-        
         HttpEntity<UserDTO> request = new HttpEntity<>(userBean, headers);
+		String url = "http://localhost:8080/api/auth/login";
 		
-        try {
-        	
-        	return restTemplate.exchange("http://localhost:8080/api/auth/signin", HttpMethod.POST, request, String.class).getBody();
-        } catch (Exception e) {
-			System.out.println("Errore: "+ e);
-			System.out.println("RestTemplate: "+ restTemplate);
-			System.out.println("Nome Utente: "+nomeUtente);
-			System.out.println("Cognome Utente: "+cognomeUtente);
-		}
-		return "E' tutto vuoto";
-        
+    	ResponseEntity<?> res = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+    	return res;
+		//System.out.println("Errore: "+ e);
+		//System.out.println("RestTemplate: "+ restTemplate);
+		//System.out.println("Nome Utente: "+nomeUtente);
+		//System.out.println("Cognome Utente: "+cognomeUtente);
 	}
 	/*
 	public HttpHeaders basicAuthHeaders() {
@@ -116,28 +134,44 @@ public class UserController implements Serializable{
 	*/
 	
 	//Get e Set
-	public String getNomeUtente() {
-		return nomeUtente;
-	}
-
-	public void setNomeUtente(String nomeUtente) {
-		this.nomeUtente = nomeUtente;
-	}
+	
 
 	public Util getUtil() {
 		return util;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	public void setUtil(Util util) {
 		this.util = util;
 	}
 
-	public String getCognomeUtente() {
-		return cognomeUtente;
+	public String getLogUtente() {
+		return logUtente;
 	}
 
-	public void setCognomeUtente(String cognomeUtente) {
-		this.cognomeUtente = cognomeUtente;
+	public void setLogUtente(String logUtente) {
+		this.logUtente = logUtente;
+	}
+	public String getUtente() {
+		return utente;
+	}
+	public void setUtente(String utente) {
+		this.utente = utente;
 	}
 
 	

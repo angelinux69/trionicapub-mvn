@@ -20,7 +20,6 @@
 
 <h:body>
 	<ui:composition template="./common/template.xhtml">
-
 		<ui:define name="content">
 			<!-- Middle content section -->
 			<div class="middle">
@@ -44,25 +43,28 @@
 												<div class="p-grid">
 													<h:panelGroup>
 														<div class="ui-grid-col-12">
-															<div class="ui-grid-col-3">
-															<h:outputText value="Nome" /></div>
-															<div class="ui-grid-col-3">
-															<p:inputText id="nome" value="#{userController.nomeUtente}"/></div>
-															<div class="ui-grid-col-3">
-															<h:outputText value="Cognome" /></div>
-															<div class="ui-grid-col-3">
-															<p:inputText id="cognome" value="#{userController.cognomeUtente}"/></div>
+															<div class="ui-grid">
+															<h:outputText value="Username" /></div>
+															<div class="ui-grid">
+															<p:inputText id="username" placeholder="Utente" value="#{userController.username}"/></div>
+															<div class="ui-grid">
+															<br></br>
+															<h:outputText value="Password" /></div>
+															<div class="ui-grid">
+															<p:inputText id="password" type="password" placeholder="Password" value="#{userController.password}"/></div>
+															<br></br>
 															<p/>
 														</div>
 													</h:panelGroup>
 												</div>
 												<p />
 												<h:panelGroup styleClass="ui-noborder" style="margin-top:25px;width:100%;margin-bottom:25px;">
-														<p:commandButton value="Conferma inserimento"
-															actionListener="#{userController.signin()}"
+														<p:commandButton value="Login"
+															actionListener="#{userController.login()}" action="menu"
 															style="margin-right:10px" styleClass="pageButton2" />
+														<p:commandButton value="Indietro" action="menu" actionListener="#{userController.logout()}"/>
+														<input type="hidden" value="${_csrf.token}" name="_csrf" />
 												</h:panelGroup>
-
 											</p:fieldset>
 										</h:panelGroup>
 									</div>
@@ -74,7 +76,6 @@
 				</div>
 			</div>
 		</ui:define>
-
 	</ui:composition>
 </h:body>
 </html>

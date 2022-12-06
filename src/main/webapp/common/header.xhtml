@@ -4,6 +4,17 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
+	
+<style>
+	p{
+		margin-top: 15px;
+		margin-bottom: 0;
+		text-align: center;
+		font-family: "Lucida Console", "Courier New", monospace;
+  		font-size: 25px;
+  		color: #BF0000;
+	}
+</style>
 
  	<!-- Site header and navigation -->
 <h:form id="menuForm"> 
@@ -18,20 +29,11 @@
       </button>
 
 
-     </div>
-   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+    </div>
+   	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
 
       <!-- MENU -->
-      	<ul class="nav navbar-nav" id="menuSopra">
-              <h:panelGroup>
-			<li class="active" >
-			<h:commandLink action="index.xhtml">
-				<f:param name="idMenu" value="index.xhtml"/>
-			<h:outputText value="Index" />
-			</h:commandLink>
-			</li>
-	      	</h:panelGroup>
-	</ul>
+	<p>Trionica Pub</p>
     </div>
   </div>
 </nav>

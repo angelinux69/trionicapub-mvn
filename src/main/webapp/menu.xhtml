@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+<h:head>
+	<script name="jquery/jquery.js" library="primefaces"></script>
+</h:head>
+
+<style>
+.search {
+	margin-right: 0px;
+}
+
+button {
+	margin-left: 5px;
+}
+
+submenu {
+	margin-top: 50px;
+}
+</style>
+
+<h:body>
+	<ui:composition template="./common/template.xhtml">
+	<ui:define name="content">
+		<div class="card">
+			<h:form>
+				<p:growl id="messages" />
+				<p:menubar>
+					<p:submenu label="Menu" icon="pi pi-fw pi-align-justify"></p:submenu>
+
+					<p:submenu label="Ordini" icon="pi pi-fw pi-file">
+						<p:menuitem value="Nuovo Ordine" icon="pi pi-fw pi-calendar-plus" />
+						<p:menuitem value="Visualizza Ordini" icon="pi pi-fw pi-eye" />
+						<p:menuitem value="Modifica Ordine" icon="pi pi-fw pi-pencil" />
+					</p:submenu>
+
+					<p:submenu label="#{userController.username}" icon="pi pi-fw pi-user">
+						<p:menuitem value="Profilo" icon="pi pi-fw pi-id-card" />
+					</p:submenu>
+					
+					<p:divider layout="vertical" />
+
+					<f:facet name="options">
+						<div class="search">
+							<p:panel rendered="#{userController.logUtente eq 'true'}">
+								<i class="pi pi-fw pi-search" />
+								<p:inputText placeholder="Cerca" />
+								<p:commandButton value="Logout" update="@form"
+									actionListener="#{userController.logout()}" action="menu"
+									icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" />
+							</p:panel>
+							<p:panel rendered="#{userController.logUtente ne 'true'}">
+								<i class="pi pi-fw pi-search" />
+								<p:inputText placeholder="Cerca" />
+								<p:commandButton value="Login" update="@form"
+									actionListener="#{userController.login()}" action="utente"
+									icon="pi pi-fw pi-sign-in" styleClass="ui-button-info" />
+								<p:commandButton value="Registrazione"
+									icon="pi pi-fw pi-sign-in" styleClass="ui-button-info" />
+							</p:panel>
+						</div>
+					</f:facet>
+				</p:menubar>
+			</h:form>
+		</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
