@@ -167,13 +167,6 @@ public class UserController implements Serializable{
 	public void setLogUtente(String logUtente) {
 		this.logUtente = logUtente;
 	}
-	public String getUtente() {
-		return utente;
-	}
-	public void setUtente(String utente) {
-		this.utente = utente;
-	}
 
-	
 
 }
