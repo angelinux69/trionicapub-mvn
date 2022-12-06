@@ -42,12 +42,13 @@ public class UserController implements Serializable{
 	
 	RestTemplate restTemplate = new RestTemplate();
 	
-	private String username = "Utente";
+	private String username;
 
 	private String password;
 	
 	private String logUtente = "false";
 	
+	private String utente = "Utente";
 	
 	public void login(){
 		if(logUtente.equals("false")){
@@ -55,10 +56,12 @@ public class UserController implements Serializable{
 			System.out.println(username);
 			System.out.println("Sono true");
 		}
+		utente=username;
 	}
 	public void logout(){
 		if(logUtente.equals("true")){
 			logUtente="false";
+			utente="Utente";
 			System.out.println("Sono false");
 		}
 	}
@@ -167,6 +170,11 @@ public class UserController implements Serializable{
 	public void setLogUtente(String logUtente) {
 		this.logUtente = logUtente;
 	}
-
-
+	public String getUtente() {
+		return utente;
+	}
+	public void setUtente(String utente) {
+		this.utente = utente;
+	}
+	
 }
