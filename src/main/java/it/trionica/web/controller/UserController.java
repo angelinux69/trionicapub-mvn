@@ -97,7 +97,7 @@ public class UserController implements Serializable{
 		*/
         
         HttpEntity<UserDTO> request = new HttpEntity<>(userBean, headers);
-		String url = "http://localhost:8081/api/auth/signin";
+		String url = "http://localhost:4200/api/auth/signin";
 		
     	ResponseEntity<?> res = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
     	
@@ -126,7 +126,7 @@ public class UserController implements Serializable{
 		*/
         
         HttpEntity<UserDTO> request = new HttpEntity<>(userBean, headers);
-		String url = "http://localhost:8081/api/auth/registrazione";
+		String url = "http://localhost:4200/api/auth/registrazione";
 		
     	ResponseEntity<?> res = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
     	return res;
