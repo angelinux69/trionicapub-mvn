@@ -42,22 +42,31 @@
 
 												<div class="p-grid">
 													<h:panelGroup>
-														<div class="ui-grid-col-8">
+														<div class="ui-grid-col-12">
+															<div class="ui-grid-col-2"><h:outputText value="Nome" /></div>
+															<div class="ui-grid-col-2"><p:inputText id="Nome" placeholder="Nome" value="#{userController.nome}"/></div>
+															<div class="ui-grid-col-2"><h:outputText value="Cognome" /></div>
+															<div class="ui-grid-col-2"><p:inputText id="Cognome" placeholder="Cognome" value="#{userController.cognome}"/></div>
+															<div class="ui-grid-col-2"><h:outputText value="Email" /></div>
+															<div class="ui-grid-col-2"><p:inputText id="email" placeholder="Email" value="#{userController.email}"/></div>
+														</div>
+														<br/><br/>
+														<div class="ui-grid-col-12">
 															<div class="ui-grid-col-2"><h:outputText value="Username" /></div>
 															<div class="ui-grid-col-2"><p:inputText id="username" placeholder="Utente" value="#{userController.username}"/></div>
 															<div class="ui-grid-col-2"><h:outputText value="Password" /></div>
 															<div class="ui-grid-col-2"><p:inputText id="password" type="password" placeholder="Password" value="#{userController.password}"/></div>
-														</div>
-														<br/><br/><br></br>
-														<div class="ui-grid-col-8">
-															<div class="ui-grid-col-8" align="left"><h:outputText value="Non sei registrato? clicca" /> <a href="registrazione.xhtml">qui</a></div>
+															<div class="ui-grid-col-2"/>
+															<br></br>
 														</div>
 													</h:panelGroup>
 												</div>
 												<br/><br/>
+												<br/><br/>
+												<div></div>
 												<h:panelGroup styleClass="ui-noborder" style="margin-top:25px;width:100%;margin-bottom:25px;">
-														<p:commandButton value="Login"
-															actionListener="#{userController.signin()}" action="menu"
+														<p:commandButton value="Salva"
+															actionListener="#{userController.registrazione()}" action="menu"
 															style="margin-right:10px" styleClass="pageButton2" />
 														<p:commandButton value="Indietro" action="menu" actionListener="#{userController.logout()}"/>
 														<input type="hidden" value="${_csrf.token}" name="_csrf" />

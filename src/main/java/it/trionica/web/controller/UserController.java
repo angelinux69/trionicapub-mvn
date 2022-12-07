@@ -1,34 +1,24 @@
 package it.trionica.web.controller;
 
 import java.io.Serializable;
-import java.lang.System.Logger;
 import java.util.Arrays;
-import java.util.Base64;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.primefaces.shaded.json.JSONObject;
-import org.primefaces.util.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+
 import it.trionica.web.model.dto.user.UserDTO;
 import it.trionica.web.util.Util;
 import lombok.extern.log4j.Log4j2;
@@ -43,6 +33,12 @@ public class UserController implements Serializable{
 	RestTemplate restTemplate = new RestTemplate();
 	
 	private String username;
+	
+	private String nome;
+	
+	private String cognome;
+	
+	private String email;
 
 	private String password;
 	
@@ -83,13 +79,40 @@ public class UserController implements Serializable{
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> signin() {
 		
 		UserDTO userBean = new UserDTO();
 
-		userBean.setNome(username);
-		userBean.setCognome(password);
+		userBean.setUsername("angelo");
+		userBean.setPassword("pippo");
+		
+		System.out.println("username:"+userBean.getUsername());
+		
+		//qui vanno in controlli utente e la chiamata al servizio in POST che fa l'inserimento
+		HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+		/*
+		 	HttpHeaders headers = csrfHeaders();
+		*/
+        
+        HttpEntity<UserDTO> request = new HttpEntity<>(userBean, headers);
+		String url = "http://localhost:8081/api/auth/signin";
+		
+    	ResponseEntity<?> res = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+    	
+    	System.out.println(res.getBody().toString());
+    	
+    	return res;
+	}
+
+	public ResponseEntity<?> registrazione() {
+		
+		UserDTO userBean = new UserDTO();
+
+		userBean.setUsername(username);
+		userBean.setEmail(email);
+		userBean.setPassword(password);
 		
 		log.info("nome:"+userBean.getNome());
 		
@@ -103,15 +126,12 @@ public class UserController implements Serializable{
 		*/
         
         HttpEntity<UserDTO> request = new HttpEntity<>(userBean, headers);
-		String url = "http://localhost:8080/api/auth/login";
+		String url = "http://localhost:8081/api/auth/registrazione";
 		
     	ResponseEntity<?> res = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
     	return res;
-		//System.out.println("Errore: "+ e);
-		//System.out.println("RestTemplate: "+ restTemplate);
-		//System.out.println("Nome Utente: "+nomeUtente);
-		//System.out.println("Cognome Utente: "+cognomeUtente);
 	}
+
 	/*
 	public HttpHeaders basicAuthHeaders() {
         String plainCreds = "user:password";
@@ -175,6 +195,24 @@ public class UserController implements Serializable{
 	}
 	public void setUtente(String utente) {
 		this.utente = utente;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public String getCognome() {
+		return cognome;
+	}
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
 	}
 	
 }
