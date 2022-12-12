@@ -7,8 +7,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+import javax.servlet.http.HttpSession;
 
+import org.apache.http.impl.client.RequestWrapper;
 import org.primefaces.shaded.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -46,21 +49,6 @@ public class UserController implements Serializable{
 	
 	private String utente = "Utente";
 	
-	public void login(){
-		if(logUtente.equals("false")){
-			logUtente="true";
-			System.out.println(username);
-			System.out.println("Sono true");
-		}
-		utente=username;
-	}
-	public void logout(){
-		if(logUtente.equals("true")){
-			logUtente="false";
-			utente="Utente";
-			System.out.println("Sono false");
-		}
-	}
 	
 	JSONObject jsonObject = null;
 	
@@ -83,10 +71,10 @@ public class UserController implements Serializable{
 		
 		UserDTO userBean = new UserDTO();
 
-		userBean.setUsername("angelo");
-		userBean.setPassword("pippo");
+		userBean.setUsername(username);
+		userBean.setPassword(password);
 		
-		System.out.println("username:"+userBean.getUsername());
+		//System.out.println("username:"+userBean.getUsername());
 		
 		//qui vanno in controlli utente e la chiamata al servizio in POST che fa l'inserimento
 		HttpHeaders headers = new HttpHeaders();
@@ -97,11 +85,15 @@ public class UserController implements Serializable{
 		*/
         
         HttpEntity<UserDTO> request = new HttpEntity<>(userBean, headers);
-		String url = "http://localhost:4200/api/auth/signin";
+		String url = "http://localhost:8080/api/auth/signin";
 		
     	ResponseEntity<?> res = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
     	
     	System.out.println(res.getBody().toString());
+    	if(logUtente.equals("false")){
+			logUtente="true";
+		}
+    	utente=username;
     	
     	return res;
 	}
@@ -126,10 +118,24 @@ public class UserController implements Serializable{
 		*/
         
         HttpEntity<UserDTO> request = new HttpEntity<>(userBean, headers);
-		String url = "http://localhost:4200/api/auth/registrazione";
+		String url = "http://localhost:8080/api/auth/registrazione";
 		
     	ResponseEntity<?> res = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+    	if(logUtente.equals("false")){
+			logUtente="true";
+			System.out.println(username);
+		}
+		utente=username;
     	return res;
+	}
+	
+	public void logoutUtente(){
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+	    if (session != null) {
+	        session.invalidate();
+	    }
+		logUtente="false";
+		utente="Utente";
 	}
 
 	/*

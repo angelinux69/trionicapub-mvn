@@ -53,17 +53,16 @@ submenu {
 									<i class="pi pi-fw pi-search" />
 									<p:inputText placeholder="Cerca" />
 									<p:commandButton value="Logout" update="@form"
-										actionListener="#{userController.logout()}" action="menu"
+										actionListener="#{userController.logoutUtente()}" action="menu"
 										icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" />
 								</p:panel>
 								<p:panel rendered="#{userController.logUtente ne 'true'}">
 									<i class="pi pi-fw pi-search" />
 									<p:inputText placeholder="Cerca" />
-									<p:commandButton value="Login" update="@form"
-										actionListener="#{userController.login()}" action="utente"
+									<p:commandButton value="Login" update="@form" action="utente"
 										icon="pi pi-fw pi-sign-in" styleClass="ui-button-info" />
 									<p:commandButton value="Registrazione"
-										icon="pi pi-fw pi-sign-in" styleClass="ui-button-info" />
+										icon="pi pi-fw pi-sign-in" action="registrazione" styleClass="ui-button-info" />
 								</p:panel>
 							</div>
 						</f:facet>
