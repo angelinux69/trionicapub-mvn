@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
+import it.trionica.web.model.dto.user.LoginUser;
 import it.trionica.web.model.dto.user.UserDTO;
 import it.trionica.web.util.Util;
 import lombok.extern.log4j.Log4j2;
@@ -49,6 +50,7 @@ public class UserController implements Serializable{
 	
 	private String utente = "Utente";
 	
+	private LoginUser userLog;
 	
 	JSONObject jsonObject = null;
 	
@@ -56,7 +58,7 @@ public class UserController implements Serializable{
 	private Util util;
 	
 	@PostConstruct
-	public void init() throws Exception{
+	public void init(){
 		
 		log.debug("UserController init");	
 	}
@@ -70,7 +72,6 @@ public class UserController implements Serializable{
 	public ResponseEntity<?> signin() {
 		
 		UserDTO userBean = new UserDTO();
-
 		userBean.setUsername(username);
 		userBean.setPassword(password);
 		
@@ -87,13 +88,20 @@ public class UserController implements Serializable{
         HttpEntity<UserDTO> request = new HttpEntity<>(userBean, headers);
 		String url = "http://localhost:8080/api/auth/signin";
 		
-    	ResponseEntity<?> res = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+    	ResponseEntity<LoginUser> res = restTemplate.exchange(url, HttpMethod.POST, request, LoginUser.class);
     	
-    	System.out.println(res.getBody().toString());
+    	System.out.println("Nome: " + res.getBody().getNome());
+    	System.out.println("Cognome: " + res.getBody().getCognome());
+    	System.out.println("Username: " + res.getBody().getUsername());
+    	System.out.println("Token: " + res.getBody().getJwt());
     	if(logUtente.equals("false")){
 			logUtente="true";
 		}
-    	utente=username;
+    	userLog = res.getBody();
+    	utente = userLog.getUsername();
+    	
+    	HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+    	session.setAttribute("token", res.getBody().getJwt());
     	
     	return res;
 	}
@@ -101,7 +109,8 @@ public class UserController implements Serializable{
 	public ResponseEntity<?> registrazione() {
 		
 		UserDTO userBean = new UserDTO();
-
+		userBean.setNome(nome);
+		userBean.setCognome(cognome);
 		userBean.setUsername(username);
 		userBean.setEmail(email);
 		userBean.setPassword(password);
@@ -121,11 +130,7 @@ public class UserController implements Serializable{
 		String url = "http://localhost:8080/api/auth/registrazione";
 		
     	ResponseEntity<?> res = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
-    	if(logUtente.equals("false")){
-			logUtente="true";
-			System.out.println(username);
-		}
-		utente=username;
+    	
     	return res;
 	}
 	
@@ -162,9 +167,7 @@ public class UserController implements Serializable{
     }
 	*/
 	
-	//Get e Set
-	
-
+	//Get e Set	
 	public Util getUtil() {
 		return util;
 	}
@@ -219,6 +222,14 @@ public class UserController implements Serializable{
 	}
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
+	}
+
+	public LoginUser getUserLog() {
+		return userLog;
+	}
+
+	public void setUserLog(LoginUser userLog) {
+		this.userLog = userLog;
 	}
 	
 }
