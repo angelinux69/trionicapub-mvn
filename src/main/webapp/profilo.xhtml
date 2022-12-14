@@ -47,21 +47,21 @@
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText style="color: #BF0000"
-																	value="#{userController.userLog.nome}" />
+																	value="#{userController.userLog.nome != null ? userController.userLog.nome: '---'}" />
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText value="Cognome:" />
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText style="color: #BF0000"
-																	value="#{userController.userLog.cognome}" />
+																	value="#{userController.userLog.cognome != null ? userController.userLog.cognome: '---'}" />
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText value="Email:" />
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText style="color: #BF0000"
-																	value="#{userController.userLog.email}" />
+																	value="#{userController.userLog.email != null ? userController.userLog.email: '---'}" />
 															</div>
 														</div>
 														<br />
@@ -72,14 +72,14 @@
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText style="color: #BF0000"
-																	value="#{userController.userLog.username}" />
+																	value="#{userController.userLog.username != null ? userController.userLog.username: '---'}" />
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText value="Ruolo:" />
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText style="color: #BF0000"
-																	value="#{userController.userLog.roles}" />
+																	value="#{userController.userLog.roles != null ? userController.userLog.roles: '---'}" />
 															</div>
 															<div class="ui-grid-col-2" />
 															<br></br>
@@ -92,9 +92,8 @@
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText style="color: #BF0000"
-																	value="#{userController.userLog.jwt}" />
+																	value="#{userController.userLog.jwt != null ? userController.userLog.jwt: '---'}" />
 															</div>
-															<div class="ui-grid-col-2" />
 															<br></br>
 														</div>
 													</h:panelGroup>
