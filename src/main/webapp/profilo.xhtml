@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<style type="text/css">
+.ui-panel, div.ui-state-hover {
+	margin: 10px;
+	width: 300px;
+}
+
+.ui-dashboard-column {
+	width: 320px;
+}
+</style>
+
+<h:body>
+	<ui:composition template="./common/template.xhtml">
+		<ui:define name="content">
+			<!-- Middle content section -->
+			<div class="middle">
+				<div class="container">
+					<div class="col-md-12 content">
+						<h:form id="schemaDati" method="POST">
+
+							<f:metadata>
+								<f:event type="preRenderView"
+									listener="#{userController.onLoadView}" />
+							</f:metadata>
+
+							<p:growl id="msgs" showDetail="true" life="5000" />
+							<div class="ui-grid ui-grid-responsive">
+								<div class="ui-grid-row">
+									<div class="ui-grid-col-12" align="center">
+										<h:panelGroup>
+											<p:fieldset legend="Pagina Utente" toggleable="false">
+
+												<div class="p-grid">
+													<h:panelGroup>
+														<div class="ui-grid-col-12">
+															<div class="ui-grid-col-2">
+																<h:outputText value="Nome:" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText style="color: #BF0000"
+																	value="#{userController.userLog.nome}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Cognome:" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText style="color: #BF0000"
+																	value="#{userController.userLog.cognome}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Email:" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText style="color: #BF0000"
+																	value="#{userController.userLog.email}" />
+															</div>
+														</div>
+														<br />
+														<br />
+														<div class="ui-grid-col-12">
+															<div class="ui-grid-col-2">
+																<h:outputText value="Username:" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText style="color: #BF0000"
+																	value="#{userController.userLog.username}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Ruolo:" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText style="color: #BF0000"
+																	value="#{userController.userLog.roles}" />
+															</div>
+															<div class="ui-grid-col-2" />
+															<br></br>
+														</div>
+														<br />
+														<br />
+														<div class="ui-grid-col-12">
+															<div class="ui-grid-col-2">
+																<h:outputText value="Token:" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText style="color: #BF0000"
+																	value="#{userController.userLog.jwt}" />
+															</div>
+															<div class="ui-grid-col-2" />
+															<br></br>
+														</div>
+													</h:panelGroup>
+												</div>
+												<br />
+												<br />
+												<br />
+												<br />
+												<div></div>
+												<h:panelGroup styleClass="ui-noborder"
+													style="margin-top:25px;width:100%;margin-bottom:25px;">
+													<p:commandButton value="Indietro" action="menu" />
+												</h:panelGroup>
+											</p:fieldset>
+										</h:panelGroup>
+									</div>
+								</div>
+							</div>
+						</h:form>
+
+					</div>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
