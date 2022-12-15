@@ -99,6 +99,7 @@ public class UserController implements Serializable{
 		}
     	userLog = res.getBody();
     	utente = userLog.getUsername();
+    	System.out.println("logUtente: " + logUtente);
     	
     	HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
     	session.setAttribute("token", res.getBody().getJwt());

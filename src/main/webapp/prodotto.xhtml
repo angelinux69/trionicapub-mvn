@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<style type="text/css">
+.ui-panel, div.ui-state-hover {
+	margin: 10px;
+	width: 300px;
+}
+
+.ui-dashboard-column {
+	width: 320px;
+}
+</style>
+
+<h:body>
+	<ui:composition template="./common/template.xhtml">
+		<ui:define name="content">
+			<!-- Middle content section -->
+			<div class="middle">
+				<div class="container">
+					<div class="col-md-12 content">
+						<h:form id="schemaDati" method="POST">
+
+							<f:metadata>
+								<f:event type="preRenderView"
+									listener="#{userController.onLoadView}" />
+							</f:metadata>
+
+							<p:growl id="msgs" showDetail="true" life="5000" />
+							<div class="ui-grid ui-grid-responsive">
+								<div class="ui-grid-row">
+									<div class="ui-grid-col-12" align="center">
+										<h:panelGroup>
+											<p:fieldset legend="Inserimento Prodotto" toggleable="false">
+
+												<div class="p-grid">
+													<h:panelGroup>
+														<div class="ui-grid-col-12">
+															<div class="ui-grid-col-2">
+																<h:outputText value="Nome" />
+															</div>
+															<div class="ui-grid-col-2">
+																<p:inputText id="nomeProdotto" placeholder="Nome"
+																	value="#{prodottoController.nomeProdotto}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Tipologia" />
+															</div>
+															<div class="ui-grid-col-2">
+																<p:inputText id="tipologia" placeholder="Tipologia"
+																	value="#{prodottoController.tipologia}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Gradazione" />
+															</div>
+															<div class="ui-grid-col-2">
+																<p:inputText id="gradazione" placeholder="Gradazione"
+																	value="#{prodottoController.gradazione}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Marca" />
+															</div>
+															<div class="ui-grid-col-2">
+																<p:inputText id="marca" placeholder="Marca"
+																	value="#{prodottoController.marca}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Cantina" />
+															</div>
+															<div class="ui-grid-col-2">
+																<p:inputText id="cantina" placeholder="Cantina"
+																	value="#{prodottoController.cantina}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Quantita'" />
+															</div>
+															<div class="ui-grid-col-2">
+																<p:inputText id="quantita" placeholder="Quantita'"
+																	value="#{prodottoController.quantita}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Prezzo Acquisto" />
+															</div>
+															<div class="ui-grid-col-2">
+																<p:inputText id="prezzoA" placeholder="Prezzo Acquisto"
+																	value="#{prodottoController.prezzoA}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Prezzo Vendita" />
+															</div>
+															<div class="ui-grid-col-2">
+																<p:inputText id="prezzoV" placeholder="Prezzo Vendita"
+																	value="#{prodottoController.prezzoV}" />
+															</div>
+														</div>
+														<br />
+														<br />
+													</h:panelGroup>
+												</div>
+												<br />
+												<br />
+												<br />
+												<br />
+												<div></div>
+
+												<p:panel rendered="#{userController.logUtente ne 'true'}">
+													<h1 style="color: #BF0000">Non sei Loggato!!</h1>
+													<h:panelGroup styleClass="ui-noborder"
+														style="margin-top:25px;width:100%;margin-bottom:25px;">
+														<p:commandButton value="Login" action="utente"
+															style="margin-right:10px" styleClass="pageButton2" />
+														<p:commandButton value="Indietro" action="menu" />
+													</h:panelGroup>
+												</p:panel>
+
+												<p:panel rendered="#{userController.logUtente eq 'true'}">
+													<h:panelGroup styleClass="ui-noborder"
+														style="margin-top:25px;width:100%;margin-bottom:25px;">
+														<p:commandButton value="Salva"
+															actionListener="#{prodottoController.salvaProdotto()}"
+															action="menu" style="margin-right:10px"
+															styleClass="pageButton2" />
+														<p:commandButton value="Indietro" action="menu" />
+													</h:panelGroup>
+												</p:panel>
+
+											</p:fieldset>
+										</h:panelGroup>
+									</div>
+								</div>
+							</div>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
