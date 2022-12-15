@@ -5,7 +5,7 @@ import java.util.Arrays;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.springframework.http.HttpEntity;
@@ -20,7 +20,7 @@ import it.trionica.web.util.Util;
 import lombok.extern.log4j.Log4j2;
 
 @ManagedBean(name="prodottoController")
-@SessionScoped
+@ViewScoped
 @Log4j2
 public class ProdottoController {
 	
