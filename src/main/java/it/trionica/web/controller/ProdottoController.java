@@ -1,6 +1,9 @@
 package it.trionica.web.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -38,6 +41,7 @@ public class ProdottoController {
 	private Double prezzoV;
 	
 	private ProdottoDTO prod;
+	private List<ProdottoDTO> magazzino = new ArrayList<>();
 	
 	@ManagedProperty(value="#{util}")
 	private Util util;
@@ -45,7 +49,7 @@ public class ProdottoController {
 	@PostConstruct
 	public void init(){
 		
-		log.debug("UserController init");	
+		log.debug("ProdottoController init");	
 	}
 	
 	public void onLoadView(ComponentSystemEvent event) {
@@ -83,6 +87,26 @@ public class ProdottoController {
     	prod = res.getBody();
     	
     	return res;
+	}
+	
+	public void magazzino(){
+		
+		HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.set("X-COM-PERSIST", "NO");
+        headers.set("X-COM-LOCATION", "USA");
+		
+        HttpEntity<ProdottoDTO> request = new HttpEntity<>(headers);
+		String url = "http://localhost:8080/api/auth/magazzino";
+		ResponseEntity<ProdottoDTO[]> res = restTemplate.exchange(url, HttpMethod.GET, request, ProdottoDTO[].class);
+    	
+		for(ProdottoDTO x: res.getBody()){
+			magazzino.add(x);
+		}
+		System.out.println("-----");
+		for(ProdottoDTO x: magazzino){
+			System.out.println(x);
+		}
 	}
 
 	//Get & Set
@@ -180,6 +204,14 @@ public class ProdottoController {
 
 	public void setProd(ProdottoDTO prod) {
 		this.prod = prod;
+	}
+
+	public List<ProdottoDTO> getMagazzino() {
+		return magazzino;
+	}
+
+	public void setMagazzino(List<ProdottoDTO> magazzino) {
+		this.magazzino = magazzino;
 	}
 	
 }

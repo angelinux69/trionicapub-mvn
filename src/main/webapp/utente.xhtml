@@ -57,9 +57,9 @@
 												<br/><br/>
 												<h:panelGroup styleClass="ui-noborder" style="margin-top:25px;width:100%;margin-bottom:25px;">
 														<p:commandButton value="Login"
-															actionListener="#{userController.signin()}" action="menu"
+															actionListener="#{userController.signin()}" action="index"
 															style="margin-right:10px" styleClass="pageButton2" />
-														<p:commandButton value="Indietro" action="menu" actionListener="#{userController.logout()}"/>
+														<p:commandButton value="Indietro" action="index"/>
 														<input type="hidden" value="${_csrf.token}" name="_csrf" />
 												</h:panelGroup>
 											</p:fieldset>
