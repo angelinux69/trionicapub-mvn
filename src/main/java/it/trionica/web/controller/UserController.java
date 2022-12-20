@@ -52,6 +52,8 @@ public class UserController implements Serializable{
 	
 	private LoginUser userLog;
 	
+	private String msg;
+	
 	JSONObject jsonObject = null;
 	
 	@ManagedProperty(value="#{util}")
@@ -69,8 +71,8 @@ public class UserController implements Serializable{
 	}
 	
 	
-	public ResponseEntity<?> signin() {
-		
+	public void signin() {
+
 		UserDTO userBean = new UserDTO();
 		userBean.setUsername(username);
 		userBean.setPassword(password);
@@ -103,8 +105,6 @@ public class UserController implements Serializable{
     	
     	HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
     	session.setAttribute("token", res.getBody().getJwt());
-    	
-    	return res;
 	}
 
 	public ResponseEntity<?> registrazione() {
@@ -231,6 +231,14 @@ public class UserController implements Serializable{
 
 	public void setUserLog(LoginUser userLog) {
 		this.userLog = userLog;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 	
 }

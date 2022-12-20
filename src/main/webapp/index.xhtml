@@ -40,6 +40,12 @@ submenu {
 							<p:menuitem value="Modifica Ordine" icon="pi pi-fw pi-pencil" />
 						</p:submenu>
 						
+						<p:submenu label="Tavoli" icon="pi pi-fw pi-file">
+							<p:menuitem value="Nuovo Tavolo" icon="pi pi-fw pi-calendar-plus" action="tavolo"/>
+							<p:menuitem value="Visualizza Tavoli" icon="pi pi-fw pi-eye" />
+							<p:menuitem value="Cancella Tavolo" icon="pi pi-fw pi-pencil" />
+						</p:submenu>
+						
 						<p:submenu label="Magazzino" icon="pi pi-fw pi-file">
 							<p:menuitem value="Nuovo Prodotto" icon="pi pi-fw pi-calendar-plus" action="prodotto"/>
 							<p:menuitem value="Magazzino" icon="pi pi-fw pi-eye" actionListener="#{prodottoController.magazzino()}" action="magazzino"/>
