@@ -29,7 +29,7 @@
 
 							<f:metadata>
 								<f:event type="preRenderView"
-									listener="#{userController.onLoadView}" />
+									listener="#{prodottoController.onLoadView}" />
 							</f:metadata>
 
 							<p:growl id="msgs" showDetail="true" life="5000" />
@@ -123,7 +123,7 @@
 													<h:panelGroup styleClass="ui-noborder"
 														style="margin-top:25px;width:100%;margin-bottom:25px;">
 														<p:commandButton value="Salva"
-															actionListener="#{prodottoController.salvaProdotto()}"
+															actionListener="#{prodottoController.salvaProdotto}"
 															action="magazzino" style="margin-right:10px"
 															styleClass="pageButton2" />
 														<p:commandButton value="Indietro" action="index" />

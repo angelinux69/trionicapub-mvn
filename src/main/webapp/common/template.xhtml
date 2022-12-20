@@ -28,7 +28,7 @@
 	    PF('statusDialog').hide();
 	}
 </script>
-	
+<script name="jquery/jquery.js" library="primefaces"></script>
 </h:head>
 
 
@@ -36,15 +36,15 @@
    <div class="page">
         <div class="header">
              <ui:include src="/common/header.xhtml"/>
-        </div>
+	        </div>
         	<div>
-		<p:cache disabled="true">
-			<p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">
-				<ui:insert name="content">
-			    Default Content
-			</ui:insert>
-			</p:ajaxStatus>
-		</p:cache>
+			<p:cache disabled="true">
+				<p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">
+					<ui:insert name="content">
+				    Default Content
+					</ui:insert>
+				</p:ajaxStatus>
+			</p:cache>
 	 
 		<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 	 
@@ -53,9 +53,10 @@
 		</p:dialog>
  
 		</div>
-        </div>
-        <h:outputScript library="includes" name="regionalsettings.js"/>
-	<h:outputScript library="includes" name="bootstrap/js/bootstrap.min.js"/>
+		
+      </div>
+      <h:outputScript library="includes" name="regionalsettings.js"/>
+	  <h:outputScript library="includes" name="bootstrap/js/bootstrap.min.js"/>
     </h:body>
-
+  
 </html>

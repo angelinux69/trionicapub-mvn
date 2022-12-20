@@ -54,10 +54,10 @@ public class ProdottoController {
 	
 	public void onLoadView(ComponentSystemEvent event) {
 	
-		log.debug("sono in onloadView");
+		log.debug("sono in onloadView di prodotto controller");
 	}
 	
-	public ResponseEntity<?> salvaProdotto() {
+	public void salvaProdotto() {
 		
 		ProdottoDTO prodotto = new ProdottoDTO();
 		prodotto.setNomeProdotto(nomeProdotto);
@@ -81,12 +81,12 @@ public class ProdottoController {
 		*/
         
         HttpEntity<ProdottoDTO> request = new HttpEntity<>(prodotto, headers);
-		String url = "http://localhost:8080/api/auth/salvaProdotto";
+		String url = "http://localhost:8081/api/auth/salvaProdotto";
 		
     	ResponseEntity<ProdottoDTO> res = restTemplate.exchange(url, HttpMethod.POST, request, ProdottoDTO.class);
     	prod = res.getBody();
     	
-    	return res;
+    	return;
 	}
 	
 	public void magazzino(){

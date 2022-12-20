@@ -27,6 +27,7 @@
         <!-- LOG everything at INFO level -->
         <Root level="debug">
             <AppenderRef ref="RollingFile" />
+            <AppenderRef ref="Console" />
         </Root>
  
         <!-- LOG "it.sian*" at TRACE level -->
