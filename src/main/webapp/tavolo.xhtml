@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<style type="text/css">
+.ui-panel, div.ui-state-hover {
+	margin: 10px;
+	width: 300px;
+}
+
+.ui-dashboard-column {
+	width: 320px;
+}
+</style>
+
+<h:body>
+	<ui:composition template="./common/template.xhtml">
+		<ui:define name="content">
+			<!-- Middle content section -->
+			<div class="middle">
+				<div class="container">
+					<div class="col-md-12 content">
+						<h:form id="schemaDati" method="POST">
+
+							<f:metadata>
+								<f:event type="preRenderView" listener="#{tavoloCon.onLoadView}" />
+							</f:metadata>
+
+							<p:growl id="msgs" showDetail="true" life="5000" />
+							<div class="ui-grid ui-grid-responsive">
+								<div class="ui-grid-row">
+									<div class="ui-grid-col-12" align="center">
+										<h:panelGroup>
+											<p:fieldset legend="Inserimento Tavolo" toggleable="false">
+
+												<div class="p-grid">
+													<h:panelGroup>
+														<div class="ui-grid-col-12">
+															<div class="ui-grid-col-2">
+																<h:outputText value="Numero Tavolo" />
+															</div>
+															<div class="ui-grid-col-2">
+																<p:inputText id="idTavolo" placeholder="Numero"
+																	value="#{tavoloCon.idTavolo}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Coperti" />
+															</div>
+															<div class="ui-grid-col-2">
+																<p:inputText id="coperto" placeholder="Coperti"
+																	value="#{tavoloCon.coperto}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Stato Tavolo" />
+															</div>
+															<div class="ui-grid-col-2">
+																<p:selectOneMenu value="#{tavoloCon.statoTav}">
+																	<f:selectItem itemLabel="Libero" itemValue="libero"/>
+																	<f:selectItem itemLabel="Occupato" itemValue="occupato"/>
+                        										</p:selectOneMenu>
+															</div>
+														</div>
+															<br /> <br />
+													</h:panelGroup>
+												</div>
+												<br />
+												<br />
+												<br />
+												<br />
+												<div></div>
+
+												<p:panel rendered="#{userController.logUtente ne 'true'}">
+													<h1 style="color: #BF0000">Non sei Loggato!!</h1>
+													<h:panelGroup styleClass="ui-noborder"
+														style="margin-top:25px;width:100%;margin-bottom:25px;">
+														<p:commandButton value="Login" action="utente"
+															style="margin-right:10px" styleClass="pageButton2" />
+														<p:commandButton value="Indietro" action="index" />
+													</h:panelGroup>
+												</p:panel>
+
+												<p:panel rendered="#{userController.logUtente eq 'true'}">
+													<h:panelGroup styleClass="ui-noborder"
+														style="margin-top:25px;width:100%;margin-bottom:25px;">
+														<p:commandButton value="Salva"
+															actionListener="#{tavoloCon.salvaTavolo()}"
+															action="index" style="margin-right:10px"
+															styleClass="pageButton2" />
+														<p:commandButton value="Indietro" action="index" />
+													</h:panelGroup>
+												</p:panel>
+
+											</p:fieldset>
+										</h:panelGroup>
+									</div>
+								</div>
+							</div>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
