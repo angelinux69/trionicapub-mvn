@@ -7,8 +7,8 @@
         </Console>
  
         <RollingFile name="RollingFile"
-            fileName="logs/trionicapub.log"
-            filePattern="logs/trionicapub-%d{-yyyy-MM-dd}-%i.log">
+            fileName="/tmp/logs/trionicapub.log"
+            filePattern="/tmp/logs/trionicapub-%d{-yyyy-MM-dd}-%i.log">
             <PatternLayout>
                 <pattern>%d %p %C{1.} %m%n</pattern>
             </PatternLayout>
@@ -27,7 +27,6 @@
         <!-- LOG everything at INFO level -->
         <Root level="debug">
             <AppenderRef ref="RollingFile" />
-            <AppenderRef ref="Console" />
         </Root>
  
         <!-- LOG "it.sian*" at TRACE level -->

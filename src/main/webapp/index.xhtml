@@ -42,7 +42,7 @@ submenu {
 						
 						<p:submenu label="Magazzino" icon="pi pi-fw pi-file">
 							<p:menuitem value="Nuovo Prodotto" icon="pi pi-fw pi-calendar-plus" action="prodotto"/>
-							<p:menuitem value="Magazzino" icon="pi pi-fw pi-eye" actionListener="#{prodottoController.magazzino()}" action="magazzino"/>
+							<p:menuitem value="Magazzino" icon="pi pi-fw pi-eye" actionListener="#{prodottoController.loadMagazzino()}" action="magazzino"/>
 						</p:submenu>
 						
 						<p:submenu label="#{userController.utente}"

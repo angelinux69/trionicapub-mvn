@@ -2,7 +2,6 @@ package it.trionica.web.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -55,6 +54,8 @@ public class ProdottoController {
 	public void onLoadView(ComponentSystemEvent event) {
 	
 		log.debug("sono in onloadView di prodotto controller");
+		this.loadMagazzino();
+		
 	}
 	
 	public void salvaProdotto() {
@@ -88,16 +89,16 @@ public class ProdottoController {
     	
     	return;
 	}
+
 	
-	public void magazzino(){
-		
+	public void loadMagazzino() {
 		HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.set("X-COM-PERSIST", "NO");
         headers.set("X-COM-LOCATION", "USA");
 		
         HttpEntity<ProdottoDTO> request = new HttpEntity<>(headers);
-		String url = "http://localhost:8080/api/auth/magazzino";
+		String url = "http://localhost:8081/api/auth/magazzino";
 		ResponseEntity<ProdottoDTO[]> res = restTemplate.exchange(url, HttpMethod.GET, request, ProdottoDTO[].class);
     	
 		for(ProdottoDTO x: res.getBody()){
@@ -108,7 +109,7 @@ public class ProdottoController {
 			System.out.println(x);
 		}
 	}
-
+	
 	//Get & Set
 	public RestTemplate getRestTemplate() {
 		return restTemplate;
@@ -213,5 +214,6 @@ public class ProdottoController {
 	public void setMagazzino(List<ProdottoDTO> magazzino) {
 		this.magazzino = magazzino;
 	}
-	
+
+
 }
