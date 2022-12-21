@@ -3,22 +3,19 @@ package it.trionica.web.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
-import javax.persistence.Column;
-
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
-import it.trionica.web.model.dto.user.TavoloDTO;
 import it.trionica.web.model.dto.user.TavoloDTO;
 import it.trionica.web.util.Util;
 import lombok.extern.log4j.Log4j2;
@@ -37,8 +34,12 @@ public class TavoloController {
 	private Boolean stato;
 	private String statoTav;
 	private TavoloDTO tav;
-	private List<TavoloDTO> listaTavoli;
+	private List<TavoloDTO> listaTavoli = new ArrayList<>();
 	private Long cercaTav;
+	
+	//HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+	//private Integer id;
+	
 	
 	@ManagedProperty(value="#{util}")
 	private Util util;
@@ -52,8 +53,18 @@ public class TavoloController {
 	public void onLoadView(ComponentSystemEvent event) {
 	
 		log.debug("sono in onloadView");
+		this.listaTavoliSala(); //QUESTO CI VA SE VUOI CARICARE LA TABELLA
 	}
-	
+	/*
+	public void idTavoloPren(){
+		id = Integer.parseInt(request.getParameter("id"));
+		if(id==null){
+			System.out.println("sono nall");
+		}else{
+			System.out.println(id);
+		}
+	}
+	*/
 	public ResponseEntity<?> salvaTavolo() {
 		
 		TavoloDTO tavolo = new TavoloDTO();
@@ -87,7 +98,7 @@ public class TavoloController {
     	return res;
 	}
 	
-	public void listaTavoli(){
+	public void listaTavoliSala(){
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -100,10 +111,6 @@ public class TavoloController {
     	
 		for(TavoloDTO x: res.getBody()){
 			listaTavoli.add(x);
-		}
-		System.out.println("-----");
-		for(TavoloDTO x: listaTavoli){
-			System.out.println(x);
 		}
 	}
 	
@@ -191,5 +198,29 @@ public class TavoloController {
 	public void setStatoTav(String statoTav) {
 		this.statoTav = statoTav;
 	}
-	
+
+	public RestTemplate getRestTemplate() {
+		return restTemplate;
+	}
+
+	public void setRestTemplate(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
+
+	public static org.apache.logging.log4j.Logger getLog() {
+		return log;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	/*
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	*/
 }

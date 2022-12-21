@@ -28,7 +28,8 @@
 						<h:form id="schemaDati" method="POST">
 
 							<f:metadata>
-								<f:event type="preRenderView" listener="#{prodottoController.onLoadView}" />
+								<f:event type="preRenderView"
+									listener="#{prenotazioneCon.onLoadView}" />
 							</f:metadata>
 
 							<p:growl id="msgs" showDetail="true" life="5000" />
@@ -36,78 +37,55 @@
 								<div class="ui-grid-row">
 									<div class="ui-grid-col-12" align="center">
 										<h:panelGroup>
-											<p:fieldset legend="Inserimento Prodotto" toggleable="false">
+											<p:fieldset legend="Prenotazione Tavolo"
+												toggleable="false">
 
 												<div class="p-grid">
 													<h:panelGroup>
 														<div class="ui-grid-col-12">
 															<div class="ui-grid-col-2">
+																<h:outputText value="Numero Tavolo" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText id="idTavoloPre"
+																	value="#{prenotazioneCon.idTavoloPre}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Coperti" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText id="coperti"
+																	value="#{prenotazioneCon.coperti}" />
+															</div>
+															<div class="ui-grid-col-2">
 																<h:outputText value="Nome" />
 															</div>
 															<div class="ui-grid-col-2">
-																<p:inputText id="nomeProdotto" placeholder="Nome"
-																	value="#{prodottoController.nomeProdotto}" />
+																<p:inputText id="nome" placeholder="Nome"
+																	value="#{prenotazioneCon.nome}" />
 															</div>
 															<div class="ui-grid-col-2">
-																<h:outputText value="Tipologia" />
+																<h:outputText value="Ora" />
 															</div>
 															<div class="ui-grid-col-2">
-																<p:inputText id="tipologia" placeholder="Tipologia"
-																	value="#{prodottoController.tipologia}" />
+																<p:inputText id="ora" placeholder="Ora"
+																	value="#{prenotazioneCon.ora}" />
 															</div>
 															<div class="ui-grid-col-2">
-																<h:outputText value="Gradazione" />
+																<h:outputText value="Cellulare" />
 															</div>
 															<div class="ui-grid-col-2">
-																<p:inputText id="gradazione" placeholder="Gradazione"
-																	value="#{prodottoController.gradazione}" />
+																<p:inputText id="cell" placeholder="Cellulare"
+																	value="#{prenotazioneCon.cell}" />
 															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText value="Marca" />
-															</div>
-															<div class="ui-grid-col-2">
-																<p:inputText id="marca" placeholder="Marca"
-																	value="#{prodottoController.marca}" />
-															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText value="Cantina" />
-															</div>
-															<div class="ui-grid-col-2">
-																<p:inputText id="cantina" placeholder="Cantina"
-																	value="#{prodottoController.cantina}" />
-															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText value="Quantita'" />
-															</div>
-															<div class="ui-grid-col-2">
-																<p:inputText id="quantita" placeholder="Quantita'"
-																	value="#{prodottoController.quantita}" />
-															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText value="Prezzo Acquisto" />
-															</div>
-															<div class="ui-grid-col-2">
-																<p:inputText id="prezzoA" placeholder="Prezzo Acquisto"
-																	value="#{prodottoController.prezzoA}" />
-															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText value="Prezzo Vendita" />
-															</div>
-															<div class="ui-grid-col-2">
-																<p:inputText id="prezzoV" placeholder="Prezzo Vendita"
-																	value="#{prodottoController.prezzoV}" />
-															</div>
+															
 														</div>
-														<br />
-														<br />
+														<br></br>
+														<br></br>
+														<br></br>
 													</h:panelGroup>
 												</div>
-												<br />
-												<br />
-												<br />
-												<br />
-												<div></div>
-
+												<br/><br/>
 												<p:panel rendered="#{userController.logUtente ne 'true'}">
 													<h1 style="color: #BF0000">Non sei Loggato!!</h1>
 													<h:panelGroup styleClass="ui-noborder"
@@ -121,15 +99,14 @@
 												<p:panel rendered="#{userController.logUtente eq 'true'}">
 													<h:panelGroup styleClass="ui-noborder"
 														style="margin-top:25px;width:100%;margin-bottom:25px;">
-														<p:commandButton value="Salva"
-															actionListener="#{prodottoController.salvaProdotto}"
-															action="magazzino" style="margin-right:10px"
+														<p:commandButton value="Salva Prenotazione"
+															actionListener="#{prenotazioneCon.salvaPrenotazione()}"
+															action="index" style="margin-right:10px"
 															styleClass="pageButton2" />
-														<p:commandButton value="Indietro" action="magazzino" style="margin-right:10px"/>
+														<p:commandButton value="Indietro" action="sala" style="margin-right:10px"/>
 														<p:commandButton value="Home" action="index" />
 													</h:panelGroup>
 												</p:panel>
-
 											</p:fieldset>
 										</h:panelGroup>
 									</div>

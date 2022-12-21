@@ -82,7 +82,7 @@ public class ProdottoController {
 		*/
         
         HttpEntity<ProdottoDTO> request = new HttpEntity<>(prodotto, headers);
-		String url = "http://localhost:8081/api/auth/salvaProdotto";
+		String url = "http://localhost:8080/api/auth/salvaProdotto";
 		
     	ResponseEntity<ProdottoDTO> res = restTemplate.exchange(url, HttpMethod.POST, request, ProdottoDTO.class);
     	prod = res.getBody();
@@ -98,15 +98,11 @@ public class ProdottoController {
         headers.set("X-COM-LOCATION", "USA");
 		
         HttpEntity<ProdottoDTO> request = new HttpEntity<>(headers);
-		String url = "http://localhost:8081/api/auth/magazzino";
+		String url = "http://localhost:8080/api/auth/magazzino";
 		ResponseEntity<ProdottoDTO[]> res = restTemplate.exchange(url, HttpMethod.GET, request, ProdottoDTO[].class);
     	
 		for(ProdottoDTO x: res.getBody()){
 			magazzino.add(x);
-		}
-		System.out.println("-----");
-		for(ProdottoDTO x: magazzino){
-			System.out.println(x);
 		}
 	}
 	
