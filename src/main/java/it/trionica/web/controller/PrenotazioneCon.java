@@ -1,5 +1,6 @@
 package it.trionica.web.controller;
 
+import java.sql.Date;
 import java.time.LocalTime;
 import java.util.Arrays;
 
@@ -61,6 +62,8 @@ public class PrenotazioneCon {
 	public void idTavoloPren(){
 		idTavoloPre = Long.parseLong(request.getParameter("id"));
 		coperti = Integer.parseInt(request.getParameter("coperti"));
+		Date data = Date.valueOf(request.getParameter("data"));
+		System.out.println(data);
 	}
 	
 	public void salvaPrenotazione(){
