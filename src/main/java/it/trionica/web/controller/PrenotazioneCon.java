@@ -56,7 +56,6 @@ public class PrenotazioneCon {
 	
 		log.debug("sono in onloadView");
 		this.idTavoloPren();
-		//this.cercaTavolo();
 	}
 	
 	public void idTavoloPren(){
@@ -65,15 +64,16 @@ public class PrenotazioneCon {
 	}
 	
 	public void salvaPrenotazione(){
-		//this.cercaTavolo();
+		
+		System.out.println("------");
+		System.out.println(idTavoloPre);
+		this.cercaTavolo();
 		PrenotazioneDTO prenotazione = new PrenotazioneDTO();
 		prenotazione.setTavolo(tavolo);
 		prenotazione.setNome(nome);
 		prenotazione.setOra(ora);
 		prenotazione.setCell(cell);
 		
-		System.out.println("------");
-		System.out.println(idTavoloPre);
 		log.info("nome:"+prenotazione.getNome());
 		
 		//qui vanno in controlli utente e la chiamata al servizio in POST che fa l'inserimento
@@ -90,18 +90,11 @@ public class PrenotazioneCon {
 	
 	public void cercaTavolo(){
 		
-		//Long idTavoloPreno = Long.parseLong(request.getParameter("id"));
-		
-		HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+		Long param = idTavoloPre;
 
-        
-        HttpEntity<Long> request = new HttpEntity<>(idTavoloPre, headers);
 		String url = "http://localhost:8080/api/auth/cercaTavolo";
-		
-    	ResponseEntity<TavoloDTO> res = restTemplate.exchange(url, HttpMethod.POST, request, TavoloDTO.class);
-    	tavolo = res.getBody();
+		ResponseEntity<TavoloDTO> res = restTemplate.getForEntity(url + "/"+param, TavoloDTO.class);
+		tavolo = res.getBody();
 	}
 
 	//Get & Set
