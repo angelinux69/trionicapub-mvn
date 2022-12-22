@@ -113,17 +113,14 @@ public class TavoloController {
 			listaTavoli.add(x);
 		}
 	}
-	
+	/*
 	public ResponseEntity<?> cercaTavolo() {
 		
 		//qui vanno in controlli utente e la chiamata al servizio in POST che fa l'inserimento
 		HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
-		/*
-		 	HttpHeaders headers = csrfHeaders();
-			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		*/
+
         
         HttpEntity<Long> request = new HttpEntity<>(cercaTav, headers);
 		String url = "http://localhost:8080/api/auth/cercaTavolo";
@@ -133,7 +130,7 @@ public class TavoloController {
     	
     	return res;
 	}
-	
+	*/
 	//Get & Set
 	public Long getIdTavolo() {
 		return idTavolo;
