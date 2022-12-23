@@ -66,14 +66,11 @@ public class PrenotazioneCon {
 	}
 
 	public void salvaPrenotazione() {
-
-		System.out.println("------");
-		System.out.println(idTavoloPre);
 		this.cercaTavolo();
 		PrenotazioneDTO prenotazione = new PrenotazioneDTO();
 		prenotazione.setTavolo(tavolo);
 		prenotazione.setNome(nome);
-		// prenotazione.setData(data);
+		prenotazione.setData(data);
 		prenotazione.setOra(ora);
 		prenotazione.setCell(cell);
 
