@@ -37,8 +37,7 @@
 								<div class="ui-grid-row">
 									<div class="ui-grid-col-12" align="center">
 										<h:panelGroup>
-											<p:fieldset legend="Prenotazione Tavolo"
-												toggleable="false">
+											<p:fieldset legend="Prenotazione Tavolo" toggleable="false">
 
 												<div class="p-grid">
 													<h:panelGroup>
@@ -56,6 +55,14 @@
 															<div class="ui-grid-col-2">
 																<h:outputText id="coperti"
 																	value="#{prenotazioneCon.coperti}" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText value="Giorno" />
+															</div>
+															<div class="ui-grid-col-2">
+																<h:outputText id="data" value="#{prenotazioneCon.data}">
+																	<f:convertDateTime pattern="dd.MM.yyyy" />
+																</h:outputText>
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText value="Nome" />
@@ -78,14 +85,15 @@
 																<p:inputText id="cell" placeholder="Cellulare"
 																	value="#{prenotazioneCon.cell}" />
 															</div>
-															
+
 														</div>
 														<br></br>
 														<br></br>
 														<br></br>
 													</h:panelGroup>
 												</div>
-												<br/><br/>
+												<br />
+												<br />
 												<p:panel rendered="#{userController.logUtente ne 'true'}">
 													<h1 style="color: #BF0000">Non sei Loggato!!</h1>
 													<h:panelGroup styleClass="ui-noborder"
@@ -103,7 +111,8 @@
 															actionListener="#{prenotazioneCon.salvaPrenotazione()}"
 															action="sala" style="margin-right:10px"
 															styleClass="pageButton2" />
-														<p:commandButton value="Indietro" action="sala" style="margin-right:10px"/>
+														<p:commandButton value="Indietro" action="sala"
+															style="margin-right:10px" />
 														<p:commandButton value="Home" action="index" />
 													</h:panelGroup>
 												</p:panel>
