@@ -25,19 +25,20 @@
 				<div class="container">
 					<h:form id="schemaDatiMaga" method="POST">
 						<f:metadata>
-								<f:event type="preRenderView" listener="#{tavoloCon.onLoadView}" />
-							</f:metadata>
+							<f:event type="preRenderView" listener="#{tavoloCon.onLoadView}" />
+						</f:metadata>
 						<div id="inizio">
 							<p:commandButton value="Indietro" action="index"
 								style="margin-left: 18px" />
 							<p:commandButton value="Aggiungi Tavolo" action="tavolo"
-								style="margin-left: 10px;" />			
-							<input type="datetime-local" name="data"/>
+								style="margin-left: 10px;" />
+							<p:datePicker value="#{prenotazioneCon.data}"
+								monthNavigator="true" pattern="dd.MM.yyyy"
+								style="margin-left: 10px;" />
 						</div>
 						<div class="ui-grid-col-12" align="center">
 							<p:fieldset legend="Sala" toggleable="false">
-								<p:dataTable var="tavolo"
-									value="#{tavoloCon.listaTavoli}"
+								<p:dataTable var="tavolo" value="#{tavoloCon.listaTavoli}"
 									emptyMessage="Nessun tavolo trovato" stripedRows="true">
 									<p:column headerText="Numero Tavolo">
 										<h:outputText value="#{tavolo.idTavolo}" />
@@ -48,13 +49,15 @@
 									</p:column>
 
 									<p:column headerText="Disponibilita'">
-										<h:outputText value="#{tavolo.stato == true ? 'libero':'occupato'}" />
+										<h:outputText
+											value="#{tavolo.stato == true ? 'libero':'occupato'}" />
 									</p:column>
-									
+
 									<p:column>
-										<p:commandButton value="Prenota" action="prenotazione">
+										<p:commandButton value="Prenota"
+											actionListener="#{prenotazioneCon.idTavoloPren()}"
+											action="prenotazione">
 											<f:param name="id" value="#{tavolo.idTavolo}"></f:param>
-											<f:param name="coperti" value="#{tavolo.coperto}"></f:param>
 										</p:commandButton>
 									</p:column>
 								</p:dataTable>

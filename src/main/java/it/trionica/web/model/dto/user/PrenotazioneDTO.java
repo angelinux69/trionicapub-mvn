@@ -1,22 +1,20 @@
 package it.trionica.web.model.dto.user;
 
-import java.time.LocalTime;
-
-import org.primefaces.component.clock.Clock;
+import java.util.Date;
 
 import lombok.ToString;
 
-@ToString(includeFieldNames=true)
+@ToString(includeFieldNames = true)
 public class PrenotazioneDTO {
-	
+
 	private Long idPrenotazione;
 	private String nome;
 	private Integer cell;
+	private Date data;
 	private String ora;
 	private TavoloDTO tavolo;
-	
-	
-	//Get & Set
+
+	// Get & Set
 	public Long getIdPrenotazione() {
 		return idPrenotazione;
 	}
@@ -56,5 +54,13 @@ public class PrenotazioneDTO {
 	public void setTavolo(TavoloDTO tavolo) {
 		this.tavolo = tavolo;
 	}
-	
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
 }
