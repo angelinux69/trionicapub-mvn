@@ -86,8 +86,7 @@ public class PrenotazioneCon {
 		HttpEntity<PrenotazioneDTO> request = new HttpEntity<>(prenotazione, headers);
 		String url = "http://localhost:8081/api/auth/salvaPrenotazione";
 
-		ResponseEntity<PrenotazioneDTO> res = restTemplate.exchange(url, HttpMethod.POST, request,
-				PrenotazioneDTO.class);
+		ResponseEntity<PrenotazioneDTO> res = restTemplate.exchange(url, HttpMethod.POST, request,PrenotazioneDTO.class);
 	}
 
 	public TavoloDTO cercaTavolo() {
