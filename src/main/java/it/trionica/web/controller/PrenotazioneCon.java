@@ -31,8 +31,7 @@ public class PrenotazioneCon {
 	private static final long serialVersionUID = 1L;
 
 	RestTemplate restTemplate = new RestTemplate();
-	Map<String, String> param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-
+	
 	private Long idPrenotazione;
 	private TavoloDTO tavolo;
 	private String nome;
@@ -57,6 +56,7 @@ public class PrenotazioneCon {
 	}
 
 	public void idTavoloPren() {
+		Map<String, String> param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		idTavoloPre = param.get("id");
 		if (data == null || data.toString().isEmpty()) {
 			data = new Date();
@@ -177,14 +177,6 @@ public class PrenotazioneCon {
 
 	public void setData(Date data) {
 		this.data = data;
-	}
-
-	public Map<String, String> getParam() {
-		return param;
-	}
-
-	public void setParam(Map<String, String> param) {
-		this.param = param;
 	}
 
 	public String getIdTavoloPre() {
