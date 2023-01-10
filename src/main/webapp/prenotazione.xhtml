@@ -29,7 +29,7 @@
 
 							<f:metadata>
 								<f:event type="preRenderView"
-									listener="#{prenotazioneCon.onLoadView}" />
+									listener="#{tavoloCon.onLoadView}" />
 							</f:metadata>
 
 							<p:growl id="msgs" showDetail="true" life="5000" />
@@ -39,83 +39,98 @@
 										<h:panelGroup>
 											<p:fieldset legend="Prenotazione Tavolo" toggleable="false">
 
-												<div class="p-grid">
-													<h:panelGroup>
-														<div class="ui-grid-col-12">
-															<div class="ui-grid-col-2">
-																<h:outputText value="Numero Tavolo" />
+												<p:panel rendered="#{prenotazioneCon.tab eq 'true'}">
+													<div class="p-grid">
+														<h:panelGroup>
+															<div class="ui-grid-col-12">
+																<div class="ui-grid-col-2">
+																	<h:outputText value="Numero Tavolo" />
+																</div>
+																<div class="ui-grid-col-2">
+																	<h:outputText id="idTavoloPre"
+																		value="#{prenotazioneCon.idTavoloPre}" />
+																</div>
+																<div class="ui-grid-col-2">
+																	<h:outputText value="Coperti" />
+																</div>
+																<div class="ui-grid-col-2">
+																	<h:outputText id="coperti"
+																		value="#{prenotazioneCon.coperti}" />
+																</div>
+																<div class="ui-grid-col-2">
+																	<h:outputText value="Giorno" />
+																</div>
+																<div class="ui-grid-col-2">
+																	<h:outputText id="dataS" value="#{prenotazioneCon.data}">
+																		<f:convertDateTime pattern="dd.MM.yyyy" />
+																	</h:outputText>
+																</div>
+																<div class="ui-grid-col-2">
+																	<h:outputText value="Nome" />
+																</div>
+																<div class="ui-grid-col-2">
+																	<p:inputText id="nome" placeholder="Nome"
+																		value="#{prenotazioneCon.nome}" />
+																</div>
+																<div class="ui-grid-col-2">
+																	<h:outputText value="Ora" />
+																</div>
+																<div class="ui-grid-col-2">
+																	<p:inputText id="ora" placeholder="Ora"
+																		value="#{prenotazioneCon.ora}" />
+																</div>
+																<div class="ui-grid-col-2">
+																	<h:outputText value="Cellulare" />
+																</div>
+																<div class="ui-grid-col-2">
+																	<p:inputText id="cell" placeholder="Cellulare"
+																		value="#{prenotazioneCon.cell}" />
+																</div>
+	
 															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText id="idTavoloPre"
-																	value="#{prenotazioneCon.idTavoloPre}" />
-															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText value="Coperti" />
-															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText id="coperti"
-																	value="#{prenotazioneCon.coperti}" />
-															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText value="Giorno" />
-															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText id="data" value="#{prenotazioneCon.data}">
-																	<f:convertDateTime pattern="dd.MM.yyyy" />
-																</h:outputText>
-															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText value="Nome" />
-															</div>
-															<div class="ui-grid-col-2">
-																<p:inputText id="nome" placeholder="Nome"
-																	value="#{prenotazioneCon.nome}" />
-															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText value="Ora" />
-															</div>
-															<div class="ui-grid-col-2">
-																<p:inputText id="ora" placeholder="Ora"
-																	value="#{prenotazioneCon.ora}" />
-															</div>
-															<div class="ui-grid-col-2">
-																<h:outputText value="Cellulare" />
-															</div>
-															<div class="ui-grid-col-2">
-																<p:inputText id="cell" placeholder="Cellulare"
-																	value="#{prenotazioneCon.cell}" />
-															</div>
-
-														</div>
-														<br></br>
-														<br></br>
-														<br></br>
-													</h:panelGroup>
-												</div>
-												<br />
-												<br />
-												<p:panel rendered="#{userController.logUtente ne 'true'}">
-													<h1 style="color: #BF0000">Non sei Loggato!!</h1>
-													<h:panelGroup styleClass="ui-noborder"
-														style="margin-top:25px;width:100%;margin-bottom:25px;">
-														<p:commandButton value="Login" action="utente"
-															style="margin-right:10px" styleClass="pageButton2" />
-														<p:commandButton value="Indietro" action="index" />
-													</h:panelGroup>
+															<br></br>
+															<br></br>
+															<br></br>
+														</h:panelGroup>
+													</div>
+													
+													
+													<br />
+													<br />
+													<p:panel rendered="#{userController.logUtente ne 'true'}">
+														<h1 style="color: #BF0000">Non sei Loggato!!</h1>
+														<h:panelGroup styleClass="ui-noborder"
+															style="margin-top:25px;width:100%;margin-bottom:25px;">
+															<p:commandButton value="Login" action="utente"
+																style="margin-right:10px" styleClass="pageButton2" />
+															<p:commandButton value="Indietro" action="index" />
+														</h:panelGroup>
+													</p:panel>
+	
+													<p:panel rendered="#{userController.logUtente eq 'true'}">
+														<h:panelGroup styleClass="ui-noborder"
+															style="margin-top:25px;width:100%;margin-bottom:25px;">
+															<p:commandButton value="Salva Prenotazione"
+																actionListener="#{prenotazioneCon.salvaPrenotazione()}"
+																update="@form" style="margin-right:10px"
+																styleClass="pageButton2" />
+															<p:commandButton value="Indietro" action="sala"
+																style="margin-right:10px" />
+															<p:commandButton value="Home" action="index" />
+														</h:panelGroup>
+													</p:panel>
 												</p:panel>
-
-												<p:panel rendered="#{userController.logUtente eq 'true'}">
-													<h:panelGroup styleClass="ui-noborder"
-														style="margin-top:25px;width:100%;margin-bottom:25px;">
-														<p:commandButton value="Salva Prenotazione"
-															actionListener="#{prenotazioneCon.salvaPrenotazione()}"
+												<p:panel rendered="#{prenotazioneCon.tab ne 'true'}">
+													<p>Prenotazione Effettuata!</p>
+													<h:outputText value="#{userController.msg}"></h:outputText>
+													<br></br>
+													<br></br>
+													<p:commandButton value="Ok"
+															actionListener="#{tavoloCon.listaTavoliSala()}"
 															action="sala" style="margin-right:10px"
 															styleClass="pageButton2" />
-														<p:commandButton value="Indietro" action="sala"
-															style="margin-right:10px" />
-														<p:commandButton value="Home" action="index" />
-													</h:panelGroup>
 												</p:panel>
+												
 											</p:fieldset>
 										</h:panelGroup>
 									</div>

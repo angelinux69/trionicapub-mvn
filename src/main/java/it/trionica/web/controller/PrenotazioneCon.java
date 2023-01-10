@@ -1,7 +1,14 @@
 package it.trionica.web.controller;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
@@ -11,6 +18,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
+import org.springframework.expression.spel.support.BooleanTypedValue;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -40,6 +48,10 @@ public class PrenotazioneCon {
 	private String ora;
 	private Integer coperti;
 	private String idTavoloPre;
+	private Boolean tab = true;
+	private String dataS;
+	private List<PrenotazioneDTO> listaPren = new ArrayList<>();
+	private Boolean indietro;
 
 	@ManagedProperty(value = "#{util}")
 	private Util util;
@@ -50,18 +62,22 @@ public class PrenotazioneCon {
 		log.debug("PrenotazioneCon init");
 	}
 
-	public void onLoadView(ComponentSystemEvent event) {
+	public void onLoadView(ComponentSystemEvent event) throws ParseException {
 
 		log.debug("sono in onloadView");
+		//this.listaPrenotazioni();
+		//this.listaPrenotazioniXTavolo();
 	}
 
-	public void idTavoloPren() {
+	public void idTavoloPren() throws ParseException {
+		tab = true;
 		Map<String, String> param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		idTavoloPre = param.get("id");
+		dataS = param.get("dataDisp");
+		data = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US).parse(dataS);
 		if (data == null || data.toString().isEmpty()) {
 			data = new Date();
 		}
-		System.out.println(data);
 		coperti = this.cercaTavolo().getCoperto();
 	}
 
@@ -87,6 +103,7 @@ public class PrenotazioneCon {
 		String url = "http://localhost:8081/api/auth/salvaPrenotazione";
 
 		ResponseEntity<PrenotazioneDTO> res = restTemplate.exchange(url, HttpMethod.POST, request,PrenotazioneDTO.class);
+		tab = false;
 	}
 
 	public TavoloDTO cercaTavolo() {
@@ -97,6 +114,55 @@ public class PrenotazioneCon {
 		ResponseEntity<TavoloDTO> res = restTemplate.getForEntity(url + "/" + param, TavoloDTO.class);
 		return tavolo = res.getBody();
 	}
+	
+	public List<PrenotazioneDTO> listaPrenotazioniXTavolo() throws ParseException{
+		this.idTavoloPren();
+		Long id = Long.parseLong(idTavoloPre);
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String dataString = df.format(data);
+		//listaPren.clear(); Perchè non svuota qui e sotto si? chiedere ad angelo
+		for(PrenotazioneDTO x : listaPrenotazioni()){
+			listaPren.remove(x);
+			if(x.getTavolo().getIdTavolo().equals(id) && df.format(x.getData()).equals(dataString)){
+				listaPren.add(x);
+			}
+		}
+		indietro = false;
+		return listaPren;
+	}
+	
+	public List<PrenotazioneDTO> listaPrenXTavolo() throws ParseException{
+		Long id = Long.parseLong(idTavoloPre);
+		//listaPren.clear(); Perchè non svuota qui e sotto si? chiedere ad angelo
+		for(PrenotazioneDTO x : listaPrenotazioni()){
+			listaPren.remove(x);
+			if(x.getTavolo().getIdTavolo().equals(id)){
+				listaPren.add(x);
+			}
+		}
+		indietro = false;
+		return listaPren;
+	}
+	
+	public Set<PrenotazioneDTO> listaPrenotazioni() throws ParseException {
+		listaPren.clear();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		headers.set("X-COM-PERSIST", "NO");
+		headers.set("X-COM-LOCATION", "USA");
+
+		HttpEntity<PrenotazioneDTO> request = new HttpEntity<>(headers);
+		String url = "http://localhost:8081/api/auth/listaPrenotazioni";
+		ResponseEntity<PrenotazioneDTO[]> res = restTemplate.exchange(url, HttpMethod.GET, request, PrenotazioneDTO[].class);
+		Set<PrenotazioneDTO> lista = new HashSet<>();
+		for (PrenotazioneDTO p : res.getBody()) {
+			listaPren.add(p);
+			lista.add(p);
+		}
+		indietro = true;
+		return lista;
+	}
+	
 
 	// Get & Set
 	public Long getIdPrenotazione() {
@@ -187,4 +253,36 @@ public class PrenotazioneCon {
 		this.idTavoloPre = idTavoloPre;
 	}
 
+	public Boolean getTab() {
+		return tab;
+	}
+
+	public void setTab(Boolean tab) {
+		this.tab = tab;
+	}
+
+	public String getDataS() {
+		return dataS;
+	}
+
+	public void setDataS(String dataS) {
+		this.dataS = dataS;
+	}
+
+	public List<PrenotazioneDTO> getListaPren() {
+		return listaPren;
+	}
+
+	public void setListaPren(List<PrenotazioneDTO> listaPren) {
+		this.listaPren = listaPren;
+	}
+
+	public Boolean getIndietro() {
+		return indietro;
+	}
+
+	public void setIndietro(Boolean indietro) {
+		this.indietro = indietro;
+	}
+	
 }

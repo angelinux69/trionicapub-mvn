@@ -1,6 +1,7 @@
 package it.trionica.web.model.dto.user;
 
 import java.util.Date;
+import java.util.Objects;
 
 import lombok.ToString;
 
@@ -63,4 +64,21 @@ public class PrenotazioneDTO {
 		this.data = data;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(idPrenotazione);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PrenotazioneDTO other = (PrenotazioneDTO) obj;
+		return Objects.equals(idPrenotazione, other.idPrenotazione);
+	}
+	
 }
