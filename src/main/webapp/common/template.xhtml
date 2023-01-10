@@ -5,21 +5,22 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-<meta http-equiv="Cache-Control" content="no-cache, no-store" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="expires" content="0" />
-<meta charset="utf-8" />
+	<meta http-equiv="Cache-Control" content="no-cache, no-store" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+	<meta charset="utf-8" />
 
-<!-- Set the viewport so this responsive site displays correctly on mobile devices -->
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title><h:outputText value="Tionica PUB" escape="false" /></title>
-	
-<f:facet name="css-files">
-		<h:outputStylesheet name="includes/bootstrap/css/bootstrap.min.css" target="head"/>
-		<h:outputStylesheet name="includes/style.css" target="head"/>
-</f:facet>
+	<!-- Set the viewport so this responsive site displays correctly on mobile devices -->
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title><h:outputText value="Trionica PUB" escape="false" /></title>
 
-<script type="text/javascript">
+	<f:facet name="css-files">
+		<h:outputStylesheet name="includes/bootstrap/css/bootstrap.min.css"
+			target="head" />
+		<h:outputStylesheet name="includes/style.css" target="head" />
+	</f:facet>
+
+	<script type="text/javascript">
 	function start() {
 	    PF('statusDialog').show();
 	}
@@ -28,35 +29,38 @@
 	    PF('statusDialog').hide();
 	}
 </script>
-<script name="jquery/jquery.js" library="primefaces"></script>
+	<script name="jquery/jquery.js" library="primefaces"></script>
 </h:head>
 
 
 <h:body>
-   <div class="page">
-        <div class="header">
-             <ui:include src="/common/header.xhtml"/>
-	        </div>
-        	<div>
-			<p:cache disabled="true">
-				<p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">
-					<ui:insert name="content">
+		<div class="page">
+			<div class="header">
+				<ui:include src="/common/header.xhtml" />
+			</div>
+			<div>
+				<p:cache disabled="true">
+					<p:ajaxStatus style="display:block;margin-bottom:2em;height:24px;">
+						<ui:insert name="content">
 				    Default Content
 					</ui:insert>
-				</p:ajaxStatus>
-			</p:cache>
-	 
-		<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-	 
-		<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-		    	<h:graphicImage url="img/processing.gif" />
-		</p:dialog>
- 
+					</p:ajaxStatus>
+				</p:cache>
+
+				<p:ajaxStatus onstart="PF('statusDialog').show()"
+					onsuccess="PF('statusDialog').hide()" />
+
+				<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+					closable="false" resizable="false" showHeader="false">
+					<h:graphicImage url="img/processing.gif" />
+				</p:dialog>
+
+			</div>
+
 		</div>
-		
-      </div>
-      <h:outputScript library="includes" name="regionalsettings.js"/>
-	  <h:outputScript library="includes" name="bootstrap/js/bootstrap.min.js"/>
-    </h:body>
-  
+		<h:outputScript library="includes" name="regionalsettings.js" />
+		<h:outputScript library="includes"
+			name="bootstrap/js/bootstrap.min.js" />
+</h:body>
+
 </html>

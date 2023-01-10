@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import it.trionica.web.model.dto.user.LoginUser;
@@ -52,7 +53,7 @@ public class UserController implements Serializable {
 
 	private LoginUser userLog;
 
-	private String msg;
+	private String msg = "";
 
 	JSONObject jsonObject = null;
 
@@ -70,8 +71,8 @@ public class UserController implements Serializable {
 		log.debug("sono in onloadView");
 	}
 
-	public void signin() {
-
+	public void signin() throws HttpClientErrorException{
+		msg = "";
 		UserDTO userBean = new UserDTO();
 		userBean.setUsername(username);
 		userBean.setPassword(password);
@@ -90,22 +91,24 @@ public class UserController implements Serializable {
 
 		HttpEntity<UserDTO> request = new HttpEntity<>(userBean, headers);
 		String url = "http://localhost:8081/api/auth/signin";
+		try {
+			ResponseEntity<LoginUser> res = restTemplate.exchange(url, HttpMethod.POST, request, LoginUser.class);
+			if (logUtente.equals("false")) {
+				logUtente = "true";
+			}
+			userLog = res.getBody();
+			utente = userLog.getUsername();
+			System.out.println("logUtente: " + logUtente);
 
-		ResponseEntity<LoginUser> res = restTemplate.exchange(url, HttpMethod.POST, request, LoginUser.class);
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+			session.setAttribute("token", res.getBody().getJwt());
 
-		System.out.println("Nome: " + res.getBody().getNome());
-		System.out.println("Cognome: " + res.getBody().getCognome());
-		System.out.println("Username: " + res.getBody().getUsername());
-		System.out.println("Token: " + res.getBody().getJwt());
-		if (logUtente.equals("false")) {
-			logUtente = "true";
+			
+		} catch (HttpClientErrorException e) {
+			logUtente = "false";
+			//msg = "Credenziali errate";
 		}
-		userLog = res.getBody();
-		utente = userLog.getUsername();
-		System.out.println("logUtente: " + logUtente);
-
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		session.setAttribute("token", res.getBody().getJwt());
+		
 	}
 
 	public ResponseEntity<?> registrazione() {
@@ -145,6 +148,15 @@ public class UserController implements Serializable {
 		}
 		logUtente = "false";
 		utente = "Utente";
+	}
+	
+	public String navigate(){
+		if(logUtente.equals("true")){
+			return "index";
+		}else {
+			msg = "Credenziali errate";
+			return "utente";
+		}
 	}
 
 	/*
@@ -247,5 +259,5 @@ public class UserController implements Serializable {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-
+	
 }

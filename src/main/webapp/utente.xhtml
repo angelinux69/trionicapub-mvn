@@ -45,23 +45,26 @@
 														<div class="ui-grid-col-8">
 															<div class="ui-grid-col-2"><h:outputText value="Username" /></div>
 															<div class="ui-grid-col-2"><p:inputText id="username" placeholder="Utente" value="#{userController.username}"/></div>
-															<div><h:outputText value="#{userController.msg}" /></div>
 															<div class="ui-grid-col-2"><h:outputText value="Password" /></div>
 															<div class="ui-grid-col-2"><p:inputText id="password" type="password" placeholder="Password" value="#{userController.password}"/></div>
 														</div>
 														<br/><br/><br></br>
 														<div class="ui-grid-col-8">
 															<div class="ui-grid-col-8" align="left"><h:outputText value="Non sei registrato? clicca" /> <a href="registrazione.xhtml">qui</a></div>
+															<br></br>
+															<div class="ui-grid-col-8" align="left"><h:outputText value="#{userController.msg}" style="color: red"></h:outputText></div>
 														</div>
 													</h:panelGroup>
 												</div>
 												<br/><br/>
 												<h:panelGroup styleClass="ui-noborder" style="margin-top:25px;width:100%;margin-bottom:25px;">
-														<p:commandButton value="Login"
-															actionListener="#{userController.signin()}" action="index"
-															style="margin-right:10px" styleClass="pageButton2" />
-														<p:commandButton value="Indietro" action="index"/>
-														<input type="hidden" value="${_csrf.token}" name="_csrf" />
+														
+															<p:commandButton value="Login"
+																actionListener="#{userController.signin()}" update="@form" action="#{userController.navigate}"
+																style="margin-right:10px" styleClass="pageButton2" />	
+															<p:commandButton value="Indietro" action="index"/>
+															<input type="hidden" value="${_csrf.token}" name="_csrf" />
+															
 												</h:panelGroup>
 											</p:fieldset>
 										</h:panelGroup>
