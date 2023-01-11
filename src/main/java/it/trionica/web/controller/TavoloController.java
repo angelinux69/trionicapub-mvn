@@ -47,7 +47,8 @@ public class TavoloController {
 	private List<TavoloDTO> listaTavoli = new ArrayList<>();
 	private Long cercaTav;
 	private Date dataT;
-	private String msg = "Ciao";
+	private String msgError = "";
+	private String salvaT = "false";
 
 	// HttpServletRequest request = (HttpServletRequest)
 	// FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -69,7 +70,7 @@ public class TavoloController {
 		}
 	}
 
-	public ResponseEntity<?> salvaTavolo() {
+	public ResponseEntity<?> salvaTavolo() throws Exception {
 
 		TavoloDTO tavolo = new TavoloDTO();
 		tavolo.setIdTavolo(idTavolo);
@@ -97,11 +98,18 @@ public class TavoloController {
 
 		HttpEntity<TavoloDTO> request = new HttpEntity<>(tavolo, headers);
 		String url = "http://localhost:8081/api/auth/salvaTavolo";
-
-		ResponseEntity<TavoloDTO> res = restTemplate.exchange(url, HttpMethod.POST, request, TavoloDTO.class);
-		tav = res.getBody();
-
-		return res;
+		try {
+			ResponseEntity<TavoloDTO> res = restTemplate.exchange(url, HttpMethod.POST, request, TavoloDTO.class);
+			tav = res.getBody();
+			salvaT = "true";
+			return res;
+		} catch (Exception e) {
+			idTavolo = null;
+			coperto = null;
+			salvaT = "false";
+			msgError = "Inserire valori in tutti i campi";
+		}
+		return null;
 	}
 
 	public void listaTavoliSala() throws Exception {
@@ -179,6 +187,14 @@ public class TavoloController {
 			listPre.add(x);
 		}
 		return listPre;
+	}
+	
+	public String navigate(){
+		if(salvaT.equals("true")){
+			return "sala";
+		}else {
+			return "";
+		}
 	}
 	
 	// Get & Set
@@ -262,20 +278,20 @@ public class TavoloController {
 		return serialVersionUID;
 	}
 
-	public String getMsg() {
-		return msg;
-	}
-
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-
 	public Date getDataT() {
 		return dataT;
 	}
 
 	public void setDataT(Date dataT) {
 		this.dataT = dataT;
+	}
+
+	public String getMsgError() {
+		return msgError;
+	}
+
+	public void setMsgError(String msgError) {
+		this.msgError = msgError;
 	}
 	
 }
