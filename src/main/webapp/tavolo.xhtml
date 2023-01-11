@@ -45,34 +45,42 @@
 																<h:outputText value="Numero Tavolo" />
 															</div>
 															<div class="ui-grid-col-2">
-																<p:inputText id="idTavolo" placeholder="Numero"
-																	value="#{tavoloCon.idTavolo}" />
+																<p:inputNumber id="idTavolo" placeholder="Numero"
+																	value="#{tavoloCon.idTavolo}" minValue="1"
+																	decimalPlaces="0" thousandSeparator="" />
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText value="Coperti" />
 															</div>
 															<div class="ui-grid-col-2">
-																<p:inputText id="coperto" placeholder="Coperti"
-																	value="#{tavoloCon.coperto}" />
+																<p:inputNumber id="coperto" placeholder="Coperti"
+																	value="#{tavoloCon.coperto}" minValue="1"
+																	decimalPlaces="0" thousandSeparator="" />
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText value="Stato Tavolo" />
 															</div>
 															<div class="ui-grid-col-2">
 																<p:selectOneMenu value="#{tavoloCon.statoTav}">
-																	<f:selectItem itemLabel="Libero" itemValue="libero"/>
-																	<f:selectItem itemLabel="Occupato" itemValue="occupato"/>
-                        										</p:selectOneMenu>
+																	<f:selectItem itemLabel="Libero" itemValue="libero" />
+																	<f:selectItem itemLabel="Occupato" itemValue="occupato" />
+																</p:selectOneMenu>
 															</div>
 														</div>
-															<br /> <br />
+														<br></br>
+														<br></br>
+														<div class="ui-grid-col-8">
+															<div class="ui-grid-col-8" align="left">
+																<h:outputText value="#{tavoloCon.msgError}"
+																	style="color: red"></h:outputText>
+															</div>
+														</div>
 													</h:panelGroup>
 												</div>
 												<br />
 												<br />
 												<br />
 												<br />
-												<div></div>
 
 												<p:panel rendered="#{userController.logUtente ne 'true'}">
 													<h1 style="color: #BF0000">Non sei Loggato!!</h1>
@@ -89,8 +97,8 @@
 														style="margin-top:25px;width:100%;margin-bottom:25px;">
 														<p:commandButton value="Salva"
 															actionListener="#{tavoloCon.salvaTavolo()}"
-															action="index" style="margin-right:10px"
-															styleClass="pageButton2" />
+															update="@form" action="#{tavoloCon.navigate}"
+															style="margin-right:10px" styleClass="pageButton2" />
 														<p:commandButton value="Indietro" action="index" />
 													</h:panelGroup>
 												</p:panel>

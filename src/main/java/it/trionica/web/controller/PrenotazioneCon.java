@@ -52,6 +52,8 @@ public class PrenotazioneCon {
 	private String dataS;
 	private List<PrenotazioneDTO> listaPren = new ArrayList<>();
 	private Boolean indietro;
+	private String salvaP = "false";
+	private String msgError = "";
 
 	@ManagedProperty(value = "#{util}")
 	private Util util;
@@ -101,9 +103,15 @@ public class PrenotazioneCon {
 
 		HttpEntity<PrenotazioneDTO> request = new HttpEntity<>(prenotazione, headers);
 		String url = "http://localhost:8081/api/auth/salvaPrenotazione";
-
-		ResponseEntity<PrenotazioneDTO> res = restTemplate.exchange(url, HttpMethod.POST, request,PrenotazioneDTO.class);
-		tab = false;
+		try {
+			ResponseEntity<PrenotazioneDTO> res = restTemplate.exchange(url, HttpMethod.POST, request,PrenotazioneDTO.class);
+			tab = false;
+			salvaP = "true";
+		} catch (Exception e) {
+			salvaP = "false";
+			msgError = "Inserire tutti i campi";
+		}
+		
 	}
 
 	public TavoloDTO cercaTavolo() {
@@ -163,7 +171,14 @@ public class PrenotazioneCon {
 		return lista;
 	}
 	
-
+	public String navigate(){
+		if(salvaP.equals("true")){
+			return "sala";
+		}else {
+			return "";
+		}
+	}
+	
 	// Get & Set
 	public Long getIdPrenotazione() {
 		return idPrenotazione;
@@ -283,6 +298,22 @@ public class PrenotazioneCon {
 
 	public void setIndietro(Boolean indietro) {
 		this.indietro = indietro;
+	}
+
+	public String getSalvaP() {
+		return salvaP;
+	}
+
+	public void setSalvaP(String salvaP) {
+		this.salvaP = salvaP;
+	}
+
+	public String getMsgError() {
+		return msgError;
+	}
+
+	public void setMsgError(String msgError) {
+		this.msgError = msgError;
 	}
 	
 }

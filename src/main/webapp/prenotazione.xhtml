@@ -28,8 +28,7 @@
 						<h:form id="schemaDati" method="POST">
 
 							<f:metadata>
-								<f:event type="preRenderView"
-									listener="#{tavoloCon.onLoadView}" />
+								<f:event type="preRenderView" listener="#{tavoloCon.onLoadView}" />
 							</f:metadata>
 
 							<p:growl id="msgs" showDetail="true" life="5000" />
@@ -61,7 +60,8 @@
 																	<h:outputText value="Giorno" />
 																</div>
 																<div class="ui-grid-col-2">
-																	<h:outputText id="dataS" value="#{prenotazioneCon.data}">
+																	<h:outputText id="dataS"
+																		value="#{prenotazioneCon.data}">
 																		<f:convertDateTime pattern="dd.MM.yyyy" />
 																	</h:outputText>
 																</div>
@@ -76,25 +76,31 @@
 																	<h:outputText value="Ora" />
 																</div>
 																<div class="ui-grid-col-2">
-																	<p:inputText id="ora" placeholder="Ora"
-																		value="#{prenotazioneCon.ora}" />
+																	<p:inputMask id="ora" value="#{prenotazioneCon.ora}"
+																		mask="99:99" validateMask="true" />
 																</div>
 																<div class="ui-grid-col-2">
 																	<h:outputText value="Cellulare" />
 																</div>
 																<div class="ui-grid-col-2">
-																	<p:inputText id="cell" placeholder="Cellulare"
-																		value="#{prenotazioneCon.cell}" />
+																	<p:inputNumber id="cell" placeholder="Cellulare"
+																		value="#{prenotazioneCon.cell}" minValue="1"
+																		decimalPlaces="0" thousandSeparator="" />
 																</div>
-	
+
 															</div>
 															<br></br>
 															<br></br>
-															<br></br>
+															<div class="ui-grid-col-8">
+																<div class="ui-grid-col-8" align="left">
+																	<h:outputText value="#{prenotazioneCon.msgError}"
+																		style="color: red"></h:outputText>
+																</div>
+															</div>
 														</h:panelGroup>
 													</div>
-													
-													
+
+
 													<br />
 													<br />
 													<p:panel rendered="#{userController.logUtente ne 'true'}">
@@ -106,7 +112,7 @@
 															<p:commandButton value="Indietro" action="index" />
 														</h:panelGroup>
 													</p:panel>
-	
+
 													<p:panel rendered="#{userController.logUtente eq 'true'}">
 														<h:panelGroup styleClass="ui-noborder"
 															style="margin-top:25px;width:100%;margin-bottom:25px;">
@@ -126,11 +132,11 @@
 													<br></br>
 													<br></br>
 													<p:commandButton value="Ok"
-															actionListener="#{tavoloCon.listaTavoliSala()}"
-															action="sala" style="margin-right:10px"
-															styleClass="pageButton2" />
+														actionListener="#{tavoloCon.listaTavoliSala()}"
+														action="#{prenotazioneCon.navigate}"
+														style="margin-right:10px" styleClass="pageButton2" />
 												</p:panel>
-												
+
 											</p:fieldset>
 										</h:panelGroup>
 									</div>
