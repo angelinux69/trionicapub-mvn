@@ -54,6 +54,8 @@ public class UserController implements Serializable {
 	private LoginUser userLog;
 
 	private String msg = "";
+	
+	private String msgError = "";
 
 	JSONObject jsonObject = null;
 
@@ -106,13 +108,16 @@ public class UserController implements Serializable {
 			
 		} catch (HttpClientErrorException e) {
 			logUtente = "false";
-			//msg = "Credenziali errate";
 		}
 		
 	}
 
-	public ResponseEntity<?> registrazione() {
-
+	public ResponseEntity<String> registrazione()throws Exception{
+		msg="";
+		//controlliamo che la password sia minore di 8 e se l'if restituisce true impostiamo noi la password a null per lanciare il catch e far apparire il messaggio
+		if(password == null && password.length()<8){
+			password = null;
+		}
 		UserDTO userBean = new UserDTO();
 		userBean.setNome(nome);
 		userBean.setCognome(cognome);
@@ -135,10 +140,35 @@ public class UserController implements Serializable {
 
 		HttpEntity<UserDTO> request = new HttpEntity<>(userBean, headers);
 		String url = "http://localhost:8081/api/auth/registrazione";
-
-		ResponseEntity<?> res = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
-
-		return res;
+		try {
+			ResponseEntity<String> res = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+			if (logUtente.equals("false") && (res.getBody().equals("Username gia' presente") || res.getBody().equals("Email gia' presente"))) {
+				msgError = res.getBody();
+			}else{
+				msg = res.getBody();
+				logUtente = "true";
+			}			
+			return res;
+		} catch (Exception e) {
+			logUtente = "false";
+			if(nome == null || nome.length()==0){
+				msgError = "Inserire tutti i campi";
+			}
+			if(cognome == null || cognome.length()==0){
+				msgError = "Inserire tutti i campi";
+			}
+			if(username == null || (username.length()<5 || username.length()>50)){
+				msgError = "Username deve essere maggiore di 5 e minore di 50";
+			}
+			if(email == null || nome.length()==0){
+				msgError = "Inserire tutti i campi";
+			}
+			if(password == null || password.length()==0){
+				msgError = "Password deve essere maggiore di 8";
+			}
+		}
+		
+		return null;
 	}
 
 	public void logoutUtente() {
@@ -152,10 +182,18 @@ public class UserController implements Serializable {
 	
 	public String navigate(){
 		if(logUtente.equals("true")){
+			msg="";
 			return "index";
 		}else {
 			msg = "Credenziali errate";
 			return "utente";
+		}
+	}
+	public String navigateR(){
+		if(logUtente.equals("true")){
+			return "utente";
+		}else {
+			return "registrazione";
 		}
 	}
 
@@ -258,6 +296,14 @@ public class UserController implements Serializable {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	public String getMsgError() {
+		return msgError;
+	}
+
+	public void setMsgError(String msgError) {
+		this.msgError = msgError;
 	}
 	
 }
