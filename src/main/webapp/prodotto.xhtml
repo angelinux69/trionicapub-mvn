@@ -84,7 +84,7 @@
 															<div class="ui-grid-col-2">
 																<p:inputNumber id="quantita" placeholder="Quantita'"
 																	value="#{prodottoController.quantita}" minValue="1"
-																	decimalPlaces="0" thousandSeparator="" />
+																	decimalPlaces="0" thousandSeparator=""/>
 															</div>
 															<div class="ui-grid-col-2">
 																<h:outputText value="Prezzo Acquisto" />
@@ -106,6 +106,12 @@
 														</div>
 														<br />
 														<br />
+														<div class="ui-grid-col-8">
+															<div class="ui-grid-col-8" align="left">
+																<h:outputText value="#{prodottoController.msgError}"
+																	style="color: red"></h:outputText>
+															</div>
+														</div>
 													</h:panelGroup>
 												</div>
 												<br />
@@ -128,8 +134,8 @@
 													<h:panelGroup styleClass="ui-noborder"
 														style="margin-top:25px;width:100%;margin-bottom:25px;">
 														<p:commandButton value="Salva"
-															actionListener="#{prodottoController.salvaProdotto}"
-															action="magazzino" style="margin-right:10px"
+															actionListener="#{prodottoController.salvaProdotto}" update="@form"
+															action="#{prodottoController.navigate}" style="margin-right:10px"
 															styleClass="pageButton2" />
 														<p:commandButton value="Indietro" action="magazzino"
 															style="margin-right:10px" />

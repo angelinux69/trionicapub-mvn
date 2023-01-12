@@ -3,13 +3,16 @@ package it.trionica.web.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 
+import org.primefaces.component.video.Video;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import it.trionica.web.model.dto.user.ProdottoDTO;
+import it.trionica.web.model.dto.user.TavoloDTO;
 import it.trionica.web.util.Util;
 import lombok.extern.log4j.Log4j2;
 
@@ -38,6 +42,8 @@ public class ProdottoController {
 	private Integer quantita;
 	private Double prezzoA;
 	private Double prezzoV;
+	private String salvaPro = "false";
+	private String msgError = "";
 
 	private ProdottoDTO prod;
 	private List<ProdottoDTO> magazzino = new ArrayList<>();
@@ -58,7 +64,7 @@ public class ProdottoController {
 
 	}
 
-	public void salvaProdotto() {
+	public void salvaProdotto() throws Exception{
 
 		ProdottoDTO prodotto = new ProdottoDTO();
 		prodotto.setNomeProdotto(nomeProdotto);
@@ -86,14 +92,20 @@ public class ProdottoController {
 
 		HttpEntity<ProdottoDTO> request = new HttpEntity<>(prodotto, headers);
 		String url = "http://localhost:8081/api/auth/salvaProdotto";
-
-		ResponseEntity<ProdottoDTO> res = restTemplate.exchange(url, HttpMethod.POST, request, ProdottoDTO.class);
-		prod = res.getBody();
+		try {
+			ResponseEntity<ProdottoDTO> res = restTemplate.exchange(url, HttpMethod.POST, request, ProdottoDTO.class);
+			prod = res.getBody();
+			salvaPro="true";
+		} catch (Exception e) {
+			salvaPro="false";
+			msgError = "Campi Nome e Quantita' sono obbligatori";
+		}
 
 		return;
 	}
 
 	public void loadMagazzino() {
+		magazzino.clear();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		headers.set("X-COM-PERSIST", "NO");
@@ -105,6 +117,38 @@ public class ProdottoController {
 
 		for (ProdottoDTO x : res.getBody()) {
 			magazzino.add(x);
+		}
+	}
+	
+	public void eliminaProdotto()throws Exception{
+		Map<String, String> param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		Long idP = Long.parseLong(param.get("idP"));
+		String url = "http://localhost:8081/api/auth/eliminaProdotto";
+		try {
+			ResponseEntity<String> res = restTemplate.getForEntity(url + "/" + idP, String.class);
+			msgError = res.getBody();
+		} catch (Exception e) {
+			msgError = "Prodotto non eliminato";
+		}	
+	}
+	
+	public void modificaProdotto(){
+		Map<String, String> param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		Long idP = Long.parseLong(param.get("idP"));
+		String url = "http://localhost:8081/api/auth/modificaProdotto";
+		try {
+			ResponseEntity<String> res = restTemplate.getForEntity(url + "/" + idP, String.class);
+			msgError = res.getBody();
+		} catch (Exception e) {
+			msgError = "Prodotto non modificato";
+		}
+	}
+	
+	public String navigate(){
+		if(salvaPro.equals("true")){
+			return "magazzino";
+		}else {
+			return "";
 		}
 	}
 
@@ -213,4 +257,20 @@ public class ProdottoController {
 		this.magazzino = magazzino;
 	}
 
+	public String getSalvaPro() {
+		return salvaPro;
+	}
+
+	public void setSalvaPro(String salvaPro) {
+		this.salvaPro = salvaPro;
+	}
+
+	public String getMsgError() {
+		return msgError;
+	}
+
+	public void setMsgError(String msgError) {
+		this.msgError = msgError;
+	}
+	
 }
