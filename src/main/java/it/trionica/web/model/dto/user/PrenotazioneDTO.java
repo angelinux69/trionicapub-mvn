@@ -10,7 +10,7 @@ public class PrenotazioneDTO {
 
 	private Long idPrenotazione;
 	private String nome;
-	private Integer cell;
+	private Long cell;
 	private Date data;
 	private String ora;
 	private TavoloDTO tavolo;
@@ -30,14 +30,6 @@ public class PrenotazioneDTO {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public Integer getCell() {
-		return cell;
-	}
-
-	public void setCell(Integer cell) {
-		this.cell = cell;
 	}
 
 	public String getOra() {
@@ -62,6 +54,14 @@ public class PrenotazioneDTO {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+	
+	public Long getCell() {
+		return cell;
+	}
+
+	public void setCell(Long cell) {
+		this.cell = cell;
 	}
 
 	@Override

@@ -25,7 +25,7 @@
 				<div class="container">
 					<h:form id="schemaDatiMaga" method="POST">
 						<f:metadata>
-							<f:event type="preRenderView" listener="#{tavoloCon.onLoadView}" />
+							<f:event type="preRenderView" listener="#{prenotazioneCon.onLoadView}" />
 						</f:metadata>
 						<p:panel rendered="#{prenotazioneCon.indietro eq 'true'}">
 							<p:commandButton value="Indietro" action="index"
@@ -66,8 +66,19 @@
 									<p:column headerText="Numero">
 										<h:outputText value="#{pren.cell}" />
 									</p:column>
+									<p:column>
+										<p:commandButton icon="pi pi-times" styleClass="rounded-button ui-button-danger"
+											actionListener="#{prenotazioneCon.eliminaPren()}"
+											update="@form" action="#{prenotazioneCon.navigate}" style="margin-left: 18px;">
+											<f:param name="idPre" value="#{pren.idPrenotazione}"></f:param>
+										</p:commandButton>
+									</p:column>
 								</p:dataTable>
-							
+								<div class="ui-grid-col-8">
+									<div class="ui-grid-col-8" align="left">
+										<h:outputText value="#{prenotazioneCon.msgError}" style="color: red"></h:outputText>
+									</div>
+								</div>
 							</p:fieldset>
 							<h:panelGroup styleClass="ui-noborder"
 								style="margin-top:25px;width:100%;margin-bottom:25px;">

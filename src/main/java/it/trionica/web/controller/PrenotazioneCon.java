@@ -25,7 +25,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
 import it.trionica.web.model.dto.user.PrenotazioneDTO;
 import it.trionica.web.model.dto.user.TavoloDTO;
 import it.trionica.web.util.Util;
@@ -43,7 +42,7 @@ public class PrenotazioneCon {
 	private Long idPrenotazione;
 	private TavoloDTO tavolo;
 	private String nome;
-	private Integer cell;
+	private Long cell;
 	private Date data;
 	private String ora;
 	private Integer coperti;
@@ -64,11 +63,16 @@ public class PrenotazioneCon {
 		log.debug("PrenotazioneCon init");
 	}
 
-	public void onLoadView(ComponentSystemEvent event) throws ParseException {
+	public void onLoadView(ComponentSystemEvent event) throws Exception {
 
 		log.debug("sono in onloadView");
-		//this.listaPrenotazioni();
-		//this.listaPrenotazioniXTavolo();
+		try {
+			Map<String, String> param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+			idTavoloPre = param.get("id");
+			this.listaPrenotazioniXTavolo();
+		} catch (Exception e) {
+			this.listaPrenotazioni();
+		}
 	}
 
 	public void idTavoloPren() throws ParseException {
@@ -138,7 +142,7 @@ public class PrenotazioneCon {
 		indietro = false;
 		return listaPren;
 	}
-	
+	//questo metodo ci servirà in cerca nella lista delle prenotazioni totali
 	public List<PrenotazioneDTO> listaPrenXTavolo() throws ParseException{
 		Long id = Long.parseLong(idTavoloPre);
 		//listaPren.clear(); Perchè non svuota qui e sotto si? chiedere ad angelo
@@ -153,7 +157,7 @@ public class PrenotazioneCon {
 	}
 	
 	public Set<PrenotazioneDTO> listaPrenotazioni() throws ParseException {
-		listaPren.clear();
+		listaPren.removeAll(listaPren);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		headers.set("X-COM-PERSIST", "NO");
@@ -163,12 +167,25 @@ public class PrenotazioneCon {
 		String url = "http://localhost:8081/api/auth/listaPrenotazioni";
 		ResponseEntity<PrenotazioneDTO[]> res = restTemplate.exchange(url, HttpMethod.GET, request, PrenotazioneDTO[].class);
 		Set<PrenotazioneDTO> lista = new HashSet<>();
-		for (PrenotazioneDTO p : res.getBody()) {
-			listaPren.add(p);
-			lista.add(p);
-		}
+			for (PrenotazioneDTO p : res.getBody()) {
+				listaPren.add(p);
+				lista.add(p);
+			}
 		indietro = true;
+		salvaP="false";
 		return lista;
+	}
+	
+	public void eliminaPren()throws Exception{
+		Map<String, String> param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		Long idPre = Long.parseLong(param.get("idPre"));
+		String url = "http://localhost:8081/api/auth/eliminaPren";
+		try {
+			ResponseEntity<String> res = restTemplate.getForEntity(url + "/" + idPre, String.class);
+			msgError = res.getBody();
+		} catch (Exception e) {
+			msgError = "Prenotazione non eliminata";
+		}	
 	}
 	
 	public String navigate(){
@@ -202,14 +219,6 @@ public class PrenotazioneCon {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public Integer getCell() {
-		return cell;
-	}
-
-	public void setCell(Integer cell) {
-		this.cell = cell;
 	}
 
 	public String getOra() {
@@ -315,5 +324,12 @@ public class PrenotazioneCon {
 	public void setMsgError(String msgError) {
 		this.msgError = msgError;
 	}
-	
+
+	public Long getCell() {
+		return cell;
+	}
+
+	public void setCell(Long cell) {
+		this.cell = cell;
+	}
 }
