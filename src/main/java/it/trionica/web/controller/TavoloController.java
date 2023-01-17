@@ -49,6 +49,7 @@ public class TavoloController {
 	private Date dataT;
 	private String msgError = "";
 	private String salvaT = "false";
+	private Boolean tab = true;
 
 	// HttpServletRequest request = (HttpServletRequest)
 	// FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -102,6 +103,7 @@ public class TavoloController {
 			ResponseEntity<TavoloDTO> res = restTemplate.exchange(url, HttpMethod.POST, request, TavoloDTO.class);
 			tav = res.getBody();
 			salvaT = "true";
+			tab = false;
 			return res;
 		} catch (Exception e) {
 			idTavolo = null;
@@ -187,6 +189,18 @@ public class TavoloController {
 			listPre.add(x);
 		}
 		return listPre;
+	}
+	
+	public void eliminaTavolo()throws Exception{
+		Map<String, String> param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		Long idT = Long.parseLong(param.get("idT"));
+		String url = "http://localhost:8081/api/auth/eliminaTavolo";
+		try {
+			ResponseEntity<String> res = restTemplate.getForEntity(url + "/" + idT, String.class);
+			msgError = res.getBody();
+		} catch (Exception e) {
+			msgError = "Tavolo non eliminato";
+		}	
 	}
 	
 	public String navigate(){
@@ -292,6 +306,14 @@ public class TavoloController {
 
 	public void setMsgError(String msgError) {
 		this.msgError = msgError;
+	}
+
+	public Boolean getTab() {
+		return tab;
+	}
+
+	public void setTab(Boolean tab) {
+		this.tab = tab;
 	}
 	
 }

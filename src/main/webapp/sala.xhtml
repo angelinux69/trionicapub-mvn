@@ -73,11 +73,17 @@
 											<f:param name="dataDisp" value="#{tavoloCon.dataT}"></f:param>
 										</p:commandButton>
 										<p:commandButton icon="pi pi-times" styleClass="rounded-button ui-button-danger"
+											actionListener="#{tavoloCon.eliminaTavolo()}"
 											update="@form" style="margin-left: 18px;">
 											<f:param name="idT" value="#{tavolo.idTavolo}"></f:param>
 										</p:commandButton>
 									</p:column>
 								</p:dataTable>
+								<div class="ui-grid-col-8">
+									<div class="ui-grid-col-8" align="left">
+										<h:outputText value="#{tavoloCon.msgError}" style="color: red"></h:outputText>
+									</div>
+								</div>
 							</p:fieldset>
 							<h:panelGroup styleClass="ui-noborder"
 								style="margin-top:25px;width:100%;margin-bottom:25px;">
