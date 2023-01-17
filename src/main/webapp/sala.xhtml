@@ -32,13 +32,15 @@
 								style="margin-left: 18px" />
 							<p:commandButton value="Aggiungi Tavolo" action="tavolo"
 								style="margin-left: 18px;" />
+							
+							<p:commandButton icon="pi pi-undo" styleClass="rounded-button ui-button-danger"
+								actionListener="#{tavoloCon.listaTavoliSala()}"
+								update="@form" style="float: right; margin-left: 5px;">
+							</p:commandButton>
 							<p:datePicker value="#{tavoloCon.dataT}"
 								monthNavigator="true" pattern="dd.MM.yyyy"
-								style="margin-left: 40px;">
+								style="float: right;">
 							</p:datePicker>
-							<p:commandButton value="Controlla" actionListener="#{tavoloCon.listaTavoliSala()}"
-								update="@form" style="margin-left: 10px;">
-							</p:commandButton>
 						</div>
 						<div class="ui-grid-col-12" align="center">
 							<p:fieldset legend="Sala" toggleable="false">
@@ -64,11 +66,15 @@
 											<f:param name="id" value="#{tavolo.idTavolo}"></f:param>
 											<f:param name="dataDisp" value="#{tavoloCon.dataT}"></f:param>
 										</p:commandButton>
-										<p:commandButton value="Prenotazioni"
+										<p:commandButton icon="pi pi-list" styleClass="rounded-button ui-button-danger"
 											actionListener="#{prenotazioneCon.listaPrenotazioniXTavolo()}"
 											action="prenotazioni" style="margin-left: 18px;">
 											<f:param name="id" value="#{tavolo.idTavolo}"></f:param>
 											<f:param name="dataDisp" value="#{tavoloCon.dataT}"></f:param>
+										</p:commandButton>
+										<p:commandButton icon="pi pi-times" styleClass="rounded-button ui-button-danger"
+											update="@form" style="margin-left: 18px;">
+											<f:param name="idT" value="#{tavolo.idTavolo}"></f:param>
 										</p:commandButton>
 									</p:column>
 								</p:dataTable>

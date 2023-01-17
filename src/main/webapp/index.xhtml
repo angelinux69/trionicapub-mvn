@@ -32,7 +32,10 @@ submenu {
 				<h:form>
 					<p:growl id="messages" />
 					<p:menubar>
-						<p:submenu label="Menu" icon="pi pi-fw pi-align-justify"></p:submenu>
+						<p:submenu label="Prenotazioni" icon="pi pi-fw pi-align-justify">
+							<p:menuitem value="Nuova" icon="pi pi-fw pi-plus" action="sala"/>
+							<p:menuitem value="Lista" icon="pi pi-fw pi-list" action="prenotazioni" actionListener="#{prenotazioneCon.listaPrenotazioni()}"/>
+						</p:submenu>
 
 						<p:submenu label="Ordini" icon="pi pi-fw pi-file">
 							<p:menuitem value="Nuovo Ordine" icon="pi pi-fw pi-calendar-plus" />
@@ -43,7 +46,6 @@ submenu {
 						<p:submenu label="Tavoli" icon="pi pi-fw pi-file">
 							<p:menuitem value="Nuovo Tavolo" icon="pi pi-fw pi-calendar-plus" action="tavolo"/>
 							<p:menuitem value="Visualizza Tavoli" icon="pi pi-fw pi-eye" action="sala"/>
-							<p:menuitem value="Prenotazioni" icon="pi pi-fw pi-eye" action="prenotazioni" actionListener="#{prenotazioneCon.listaPrenotazioni()}"/>
 						</p:submenu>
 						
 						<p:submenu label="Magazzino" icon="pi pi-fw pi-file">
