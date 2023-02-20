@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<style type="text/css">
+.ui-panel, div.ui-state-hover {
+	margin: 10px;
+	width: 300px;
+}
+
+.ui-dashboard-column {
+	width: 320px;
+}
+</style>
+
+<h:body>
+	<ui:composition template="./common/template.xhtml">
+		<ui:define name="content">
+			<!-- Middle content section -->
+			<div class="middle">
+				<div class="container">
+					<div class="col-md-12 content">
+						<h:form id="schemaDati" method="POST">
+
+							<f:metadata>
+								<f:event type="preRenderView"
+									listener="#{ordineController.onLoadView}" />
+							</f:metadata>
+
+							<p:growl id="msgs" showDetail="true" life="5000" />
+							<div class="ui-grid ui-grid-responsive">
+								<div class="ui-grid-row">
+									<div class="ui-grid-col-12" align="center">
+										<h:panelGroup>
+											<p:fieldset legend="Inserimento Ordine" toggleable="false">
+												<p:panel rendered="#{ordineController.tab eq 'true'}">
+													<div class="p-grid">
+														<h:panelGroup>
+															<div class="ui-grid-col-12">
+																<div class="ui-grid-col-2">
+																	<h:outputText value="Numero Tavolo" />
+																</div>
+																<div class="ui-grid-col-2">
+																	<h:outputText id="idTavolo"
+																		value="#{ordineController.tavolo.idTavolo}" />
+																</div>
+
+																<div class="ui-grid-col-2">
+																	<h:outputText value="Tipologia" />
+																</div>
+																<div class="ui-grid-col-2">
+																	<p:selectOneMenu
+																		value="#{ordineController.tipologiaSel}">
+																		<f:selectItem itemLabel="Birra" itemValue="birra" />
+																		<f:selectItem itemLabel="Vino" itemValue="vino" />
+																		<f:selectItem itemLabel="Superalcolico"
+																			itemValue="superalcolico" />
+																		<f:selectItem itemLabel="Analcolico"
+																			itemValue="analcolico" />
+																	</p:selectOneMenu>
+																	<p:commandButton icon="pi pi-undo"
+																		styleClass="rounded-button ui-button-danger"
+																		actionListener="#{ordineController.prodottiXTipologia()}"
+																		update="@form" style="float: right; margin-left: 5px;">
+																	</p:commandButton>
+																</div>
+															</div>
+															<br></br>
+															<br></br>
+															<div class="ui-grid-col-8">
+																<div class="ui-grid-col-8" align="left">
+																	<h:outputText value="#{ordineController.msgError}"
+																		style="color: red"></h:outputText>
+																</div>
+															</div>
+														</h:panelGroup>
+													</div>
+													<br />
+													<br />
+													<br />
+													<br />
+
+													<p:panel rendered="#{userController.logUtente ne 'true'}">
+														<h1 style="color: #BF0000">Non sei Loggato!!</h1>
+														<h:panelGroup styleClass="ui-noborder"
+															style="margin-top:25px;width:100%;margin-bottom:25px;">
+															<p:commandButton value="Login" action="utente"
+																style="margin-right:10px" styleClass="pageButton2" />
+															<p:commandButton value="Indietro" action="index" />
+														</h:panelGroup>
+													</p:panel>
+
+													<p:panel rendered="#{userController.logUtente eq 'true'}">
+														<h:panelGroup styleClass="ui-noborder"
+															style="margin-top:25px;width:100%;margin-bottom:25px;">
+															<p:commandButton value="Salva"
+																actionListener="#{ordineController.salvaOrdineProdotto()}"
+																update="@form" action="sala" style="margin-right:10px"
+																styleClass="pageButton2" />
+															<p:commandButton value="Indietro"
+																actionListener="#{ordineController.cancellaOrdineNuovo()}"
+																action="sala" />
+														</h:panelGroup>
+													</p:panel>
+												</p:panel>
+												<p:panel rendered="#{ordineController.tab ne 'true'}">
+													<p>Ordine Aggiunto!</p>
+													<br></br>
+													<br></br>
+													<p:commandButton value="Ok"
+														actionListener="#{tavoloCon.listaTavoliSala()}"
+														action="sala" style="margin-right:10px"
+														styleClass="pageButton2" />
+												</p:panel>
+											</p:fieldset>
+											<br></br>
+											<br></br>
+											<p:panel rendered="#{ordineController.tab eq 'true'}">
+												<p:dataTable var="prodotto"
+													value="#{ordineController.prodottiXTip}" stripedRows="true"
+													emptyMessage="Nessun prodotto trovato" rowSelectMode="add"
+													rowKey="#{prodotto.idProdotto}" style="margin-bottom:0">
+													<p:column selectionMode="multiple"
+														style="width:60px; text-align:center;" />
+
+													<p:column headerText="Nome">
+														<h:outputText value="#{prodotto.nomeProdotto}" />
+													</p:column>
+
+													<p:column headerText="Tipologia">
+														<h:outputText value="#{prodotto.tipologia}" />
+													</p:column>
+
+													<p:column headerText="Gradazione">
+														<h:outputText value="#{prodotto.gradazione}%" />
+													</p:column>
+
+													<p:column headerText="Marca">
+														<h:outputText value="#{prodotto.marca}" />
+													</p:column>
+
+													<p:column headerText="Cantina">
+														<h:outputText value="#{prodotto.cantina}" />
+													</p:column>
+
+													<p:column headerText="Disponibilita'">
+														<h:outputText value="#{prodotto.quantita}" />
+													</p:column>
+
+													<p:column headerText="Prezzo Vendita">
+														<h:outputText value="#{prodotto.prezzoV}€" />
+													</p:column>
+
+													<p:column>
+														<p:commandButton icon="pi pi-pencil"
+															styleClass="edit-button rounded-button ui-button-success"															
+															oncomplete="PF('manageProductDialog').show()"
+															process="@this" update="@form"
+															actionListener="#{ordineController.cercaProdotto()}">
+															<f:param name="idProdotto" value="#{prodotto.idProdotto}"></f:param>
+														</p:commandButton>
+													</p:column>
+
+												</p:dataTable>
+
+													<p:dialog header="Quantità Prodotto"
+														widgetVar="manageProductDialog" responsive="true">														
+															<div class="field">
+																<h:outputText
+																	value="#{ordineController.prodottoSel.nomeProdotto}" />
+															</div>
+															<div class="formgrid grid">
+																<div class="field col">
+																	<p:spinner id="quantita" min="0"
+																		value="#{ordineController.quantitaOrd}" />
+																</div>
+															</div>
+															<br></br>
+															<br></br>
+															<p:commandButton value="Conferma" icon="pi pi-check"
+																actionListener="#{ordineController.creaOrdineProdotto()}"
+																update="@form" action="ordine"/>						
+													</p:dialog>
+												
+
+											</p:panel>
+
+										</h:panelGroup>
+									</div>
+								</div>
+							</div>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

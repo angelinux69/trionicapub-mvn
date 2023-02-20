@@ -1,5 +1,8 @@
 package it.trionica.web.model.dto.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 
 import lombok.ToString;
@@ -13,8 +16,11 @@ public class ProdottoDTO {
 	private String marca;
 	private String cantina;
 	private Integer quantita;
+	private Integer quantitaOrdinata;
 	private Double prezzoA;
 	private Double prezzoV;
+	private List<OrdineProdottoDTO> ordineProdotto = new ArrayList<>();
+	
 	
 	//Get & Set
 	public Long getIdProdotto() {
@@ -70,6 +76,20 @@ public class ProdottoDTO {
 	}
 	public void setPrezzoV(Double prezzoV) {
 		this.prezzoV = prezzoV;
+	}
+	public Integer getQuantitaOrdinata() {
+		return quantitaOrdinata;
+	}
+	public void setQuantitaOrdinata(Integer quantitaOrdinata) {
+		this.quantitaOrdinata = quantitaOrdinata;
+	}
+	
+	public List<OrdineProdottoDTO> getOrdineProdotto() {
+		return ordineProdotto;
+	}
+	
+	public void setOrdineProdotto(List<OrdineProdottoDTO> ordineProdotto) {
+		this.ordineProdotto = ordineProdotto;
 	}
 	
 }
