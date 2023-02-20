@@ -35,11 +35,9 @@ public class TavoloDTO {
 	public void setStato(Boolean stato) {
 		this.stato = stato;
 	}
-
 	public List<PrenotazioneDTO> getPrenotazioni() {
 		return prenotazioni;
 	}
-
 	public void setPrenotazioni(List<PrenotazioneDTO> prenotazioni) {
 		this.prenotazioni = prenotazioni;
 	}

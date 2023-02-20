@@ -77,6 +77,11 @@
 											update="@form" style="margin-left: 18px;">
 											<f:param name="idT" value="#{tavolo.idTavolo}"></f:param>
 										</p:commandButton>
+										<p:commandButton icon="pi pi-pencil" styleClass="rounded-button ui-button-danger"
+											actionListener="#{ordineController.salvaOrdine()}"
+											action="ordine" style="margin-left: 18px;">
+											<f:param name="idTav" value="#{tavolo.idTavolo}"></f:param>
+										</p:commandButton>
 									</p:column>
 								</p:dataTable>
 								<div class="ui-grid-col-8">

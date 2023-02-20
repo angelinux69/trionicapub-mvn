@@ -9,9 +9,8 @@ import lombok.ToString;
 public class OrdineDTO {
 	private Long idOrdine;
 	private TavoloDTO tavolo;
-	private List<ProdottoDTO> prodotto = new ArrayList<>();
-	private Integer quantitaOrdine;
 	private Double conto;
+	private List<OrdineProdottoDTO> ordineProdotto = new ArrayList<>();
 	
 	//Get & Set
 	public Long getIdOrdine() {
@@ -26,23 +25,19 @@ public class OrdineDTO {
 	public void setTavolo(TavoloDTO tavolo) {
 		this.tavolo = tavolo;
 	}
-	public List<ProdottoDTO> getProdotto() {
-		return prodotto;
-	}
-	public void setProdotto(List<ProdottoDTO> prodotto) {
-		this.prodotto = prodotto;
-	}
-	public Integer getQuantitaOrdine() {
-		return quantitaOrdine;
-	}
-	public void setQuantitaOrdine(Integer quantitaOrdine) {
-		this.quantitaOrdine = quantitaOrdine;
-	}
 	public Double getConto() {
 		return conto;
 	}
 	public void setConto(Double conto) {
 		this.conto = conto;
 	}
-
+	
+	public List<OrdineProdottoDTO> getOrdineProdotto() {
+		return ordineProdotto;
+	}
+	
+	public void setOrdineProdotto(List<OrdineProdottoDTO> ordineProdotto) {
+		this.ordineProdotto = ordineProdotto;
+	}
+	
 }
